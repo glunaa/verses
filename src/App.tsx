@@ -109,7 +109,13 @@ const App: FC = () => {
         <div className="prayer-menu">
           <ul>
             {prayers.map((prayer, index) => (
-              <li key={index} onClick={() => setCurrentPrayerIndex(index)}>
+              <li
+                key={index}
+                onClick={() => {
+                  setCurrentPrayerIndex(index); // Set the selected prayer
+                  setIsMenuOpen(false); // Close the menu
+                }}
+              >
                 {prayer.title}
               </li>
             ))}
