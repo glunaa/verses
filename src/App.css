@@ -45,6 +45,9 @@ body {
   border-radius: 8px;
   padding: 10px;
   z-index: 1000;
+  max-height: 60vh; /* Set a maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  min-width: 200px; /* Optional: keeps the menu wide enough */
 }
 
 .prayer-menu ul {

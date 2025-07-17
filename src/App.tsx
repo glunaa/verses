@@ -6,6 +6,10 @@ import './App.css';
 const App: FC = () => {
   const prayers: verseProps[] = [
     {
+      title: 'Sign of the Cross',
+      body: 'In the name of the Father, and of the Son, and of the Holy Spirit. Amen.',
+    },
+    {
       title: 'Our Father',
       body: 'Our Father, Who art in heaven, Hallowed be Thy Name. Thy Kingdom come. Thy Will be done, on earth as it is in Heaven. Give us this day our daily bread. And forgive us our trespasses, as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen.',
     },
@@ -61,6 +65,11 @@ const App: FC = () => {
       title: 'Prayer before the crucifix',
       body: 'Behold O good and sweetest Jesus, I cast myself upon my knees in Thy sight, and with the most fervent desire of my soul I pray and beseech Thee that Thou wouldst impress upon my heart lively sentiments of faith, hope and charity, with true repentance for my sins and a firm purpose of amendment, whilst with deep affection and grief of soul I ponder within myself and mentally contemplate Thy five most precious wounds; having before my eyes that which David spoke in prophecy: “They have pierced my hands and feet, they have numbered all my bones."',
     },
+    {
+      title: 'Prayer for the Holy Souls in Purgatory',
+      body: 'Eternal Father, I offer Thee the most precious blood of Thy Divine Son, Jesus, in union with the Masses said throughout the world today, for all the Holy Souls in Purgatory. Amen.',
+    },
+    
   ];
 
   const [currentPrayerIndex, setCurrentPrayerIndex] = useState(0);
