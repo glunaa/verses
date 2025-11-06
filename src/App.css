@@ -1,6 +1,6 @@
 body {
-  background: linear-gradient(135deg, #e5ccb4, #ffffff);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('/sacred-heart.jpeg') repeat center fixed;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.4;
   display: flex;
   justify-content: center;
@@ -9,8 +9,8 @@ body {
   margin: 0;
   padding: 0 10px;
   overflow: hidden;
-  position: relative;
-  background-size: cover; /* Prevent background from repeating */
+  position: relative; 
+  /* Prevent background from repeating */
 }
 
 .parent {
@@ -45,9 +45,9 @@ body {
   border-radius: 8px;
   padding: 10px;
   z-index: 1000;
-  max-height: 60vh; /* Set a maximum height */
-  overflow-y: auto; /* Enable vertical scrolling */
-  min-width: 200px; /* Optional: keeps the menu wide enough */
+  max-height: 60vh; /* vertical limit */
+  overflow-y: auto; /* scroll if needed */
+  min-width: 200px;
 }
 
 .prayer-menu ul {
@@ -67,23 +67,39 @@ body {
 
 .container {
   text-align: center;
-  max-width: 600px;
+  max-width: 700px; /* wider for readability */
   width: 100%;
-  padding: 20px;
-  background-color: #fff;
+  padding: 25px;
+  background-color: rgba(255, 255, 255, 0.8); /* white with 80% opacity */
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  overflow: hidden; /* Prevent content from spilling out */
-  margin: 0 auto; /* Center the container */
-}
-
-.verse {
-  text-align: center;
+  overflow: hidden;
   margin: 0 auto;
 }
 
+.verse {
+  text-align: left; /* easier for long text */
+  margin: 0 auto;
+  max-height: 60vh; /* scrollable area for long prayers */
+  overflow-y: auto;
+  padding: 10px;
+  line-height: 1.6; /* improved readability */
+  color: white;
+}
+
+.verse h2 {
+  font-size: 1.5rem;
+  text-align: center; /* title stays centered */
+  margin-bottom: 15px;
+}
+
+.verse p {
+  white-space: pre-wrap; /* preserve line breaks */
+  font-size: 1rem;
+}
+
 button {
-  margin: 10px;
+  margin: 10px 5px;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -103,20 +119,15 @@ button:focus {
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .container {
-    padding: 15px;
+    padding: 20px;
   }
 
   .verse h2 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 
   .verse p {
-    font-size: 1rem;
-  }
-
-  button {
-    width: auto; /* Ensure buttons are inline */
-    margin: 5px;
+    font-size: 0.95rem;
   }
 }
 
@@ -126,12 +137,12 @@ button:focus {
   }
 
   .container {
-    padding: 10px;
-    margin: 0 10px; /* Ensure equal space on both sides */
+    padding: 15px;
+    margin: 0 10px;
   }
 
   .verse h2 {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   .verse p {
@@ -139,9 +150,9 @@ button:focus {
   }
 
   button {
-    width: auto; /* Ensure buttons are inline */
+    width: auto;
     margin: 5px;
-    padding: 10px; /* Ensure buttons have enough padding on small screens */
+    padding: 10px;
   }
 
   .prayer-menu {
