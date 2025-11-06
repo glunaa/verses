@@ -22,11 +22,37 @@ Hail Mary (Ave Maria) 🌹
 
 Glory Be (Gloria Patri) 🌟
 
-Memorare 🕊️
+Fatima Prayer
 
-Sub Tuum Praesidium 🛡️
+An Act of Perfect Contrition
 
-Custom Daily Devotions 📅
+Anima Christi
+
+Apostles Creed
+
+Guardian Angel Prayer
+
+Jesus Prayer
+
+Morning Offering
+
+Prayer of St. Francis
+
+St. Michael the Archangel Prayer
+
+Prayer to the Sacred Heart of Jesus
+
+Prayer before the crucifix
+
+Prayer for the Holy Souls in Purgatory
+
+St Gemma Galgani Prayer
+
+St Joseph Terror of Demons Prayer
+
+Most Precious Blood of Jesus Prayer🩸
+
+Litany of the Most Precious Blood of Jesus 🩸
 
 ## 🛠️ Technologies Used
 
@@ -47,6 +73,8 @@ Browse prayers and toggle between English 🇺🇸 and Latin 🇻🇦
 Use during prayer, personal devotion, or study 📿
 
 Enjoy subtle background imagery behind translucent prayer cards 🎴
+
+## 🖼️Live Demo: https://catholicverses.netlify.app/
 
 ## 🤝Contributing
 
