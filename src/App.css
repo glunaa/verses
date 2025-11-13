@@ -41,6 +41,7 @@ body {
   top: 50px;
   left: 20px;
   background-color: rgb(12, 12, 12,0.9);
+  color: white;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   padding: 10px;
@@ -62,7 +63,7 @@ body {
 }
 
 .prayer-menu li:hover {
-  background-color: #f0f0f0;
+  background-color: #403e3e;
 }
 
 .container {
