@@ -3,7 +3,7 @@ import { FC } from 'react';
 export interface verseProps {
   title: string;
   body: string;
-  latinBody?: string;
+  latinBody?: string; // optional Latin body
   latinTitle?: string; // optional Latin title
   showLatin?: boolean; // toggle between English and Latin
 }
