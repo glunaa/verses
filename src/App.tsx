@@ -12,6 +12,13 @@ const App: FC = () => {
       latinBody: 'In nomine Patris, et Filii, et Spiritus Sancti. Amen.',
     },
     {
+      title: 'Apostles Creed',
+      latinTitle: 'Symbolum Apostolorum',
+      body: 'I believe in God, the Father Almighty, Creator of Heaven and earth; and in Jesus Christ, His only Son Our Lord, Who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died, and was buried; He descended into Hell; on the third day He rose again from the dead; He ascended into Heaven, and sitteth at the right hand of God, the Father almighty; from thence He shall come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.',
+      latinBody:
+        'Credo in Deum Patrem omnipotentem, Creatorem caeli et terrae; et in Iesum Christum, Filium eius unicum, Dominum nostrum, qui conceptus est de Spiritu Sancto, natus ex Maria Virgine, passus sub Pontio Pilato, crucifixus, mortuus, et sepultus; descendit ad inferos; tertia die resurrexit a mortuis; ascendit ad caelos, sedet ad dexteram Dei Patris omnipotentis; inde venturus est iudicare vivos et mortuos. Credo in Spiritum Sanctum, sanctam Ecclesiam catholicam, communionem sanctorum, remissionem peccatorum, carnis resurrectionem, vitam aeternam. Amen.',
+    },
+    {
       title: 'Our Father',
       latinTitle: 'Pater Noster',
       body: 'Our Father, Who art in heaven, Hallowed be Thy Name. Thy Kingdom come. Thy Will be done, on earth as it is in Heaven. Give us this day our daily bread. And forgive us our trespasses, as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen.',
@@ -47,25 +54,25 @@ const App: FC = () => {
         'Salve Regina, Mater misericordiae, vita, dulcedo et spes nostra, salve. Ad te clamamus exsules filii Hevae. Ad te suspiramus gementes et flentes in hac lacrimarum valle. Eia ergo, advocata nostra, illos tuos misericordes oculos ad nos converte. Et Iesum, benedictum fructum ventris tui, nobis post hoc exsilium ostende. O clemens, O pia, O dulcis Virgo Maria. Ora pro nobis, sancta Dei Genitrix, ut digni efficiamur promissionibus Christi. Amen.',
     },
     {
+      title: 'Anima Christi',
+      latinTitle: 'Anima Christi',
+      body: 'Soul of Christ, sanctify me.\nBody of Christ, save me.\nBlood of Christ, inebriate me.\nWater from the side of Christ, wash me.\nPassion of Christ, strengthen me.\nO Good Jesus, hear me.\nWithin Thy wounds hide me.\nLet me not be separated from Thee.\nDefend me from the malignant enemy.\nAt the hour of my death, call me, and bid me come to Thee,\nthat with Thy saints I may praise Thee for all eternity. Amen.',
+      latinBody:
+        'Anima Christi, sanctifica me.\nCorpus Christi, salva me.\nSanguis Christi, inebria me.\nAqua lateris Christi, lava me.\nPassio Christi, conforta me.\nO bone Iesu, exaudi me.\nIntra vulnera tua absconde me.\nNe quando separeris a me.\nAb hoste maligno protege me.\nIn hora mortis meae voca me,\net iube me venire ad Te, ut cum sanctis tuis laudem Te in saecula. Amen.',
+    },
+    {
+      title: 'St. Michael the Archangel Prayer',
+      latinTitle: 'Oratio Sancti Michaëlis',
+      body: 'St. Michael the Archangel, defend us in battle. Be our protection against the wickedness and snares of the devil. May God rebuke him, we humbly pray; and do Thou, O Prince of the Heavenly Host, by the Divine Power of God, cast into hell Satan and all the evil spirits who roam throughout the world seeking the ruin of souls. Amen.',
+      latinBody:
+        'Sancte Michael Archangele, defende nos in proelio. Contra nequitiam et insidias diaboli esto praesidium. Deus, humiliter rogamus, repelle eum; et tu, Princeps Exercitus Caelestis, per Divinam Potentiam Dei, mitte in infernum Satanam et omnes spiritus malignos qui per orbem terrarum animas perditionem quaerunt. Amen.',
+    },
+    {
       title: 'An Act of Perfect Contrition',
       latinTitle: 'Actus Perfectae Contritionis',
       body: 'O my God, I am heartily sorry for having offended Thee, and I detest all my sins because I dread the loss of Heaven and the pains of Hell; but most of all because they offend Thee, my God, Who art all good and deserving of all my love. I firmly resolve, with the help of Thy grace, to confess my sins, to do penance, and to amend my life. Amen.',
       latinBody:
         'O Deus meus, ex toto corde paenitet me omnium meorum peccatorum, quia peccando Te offendi, qui es omnia bona et dignus omni mea caritate. Firmiter propono, adiuvante gratia Tua, confiteri peccata mea, poenitere, et vitam meam emendare. Amen.',
-    },
-    {
-      title: 'Anima Christi',
-      latinTitle: 'Anima Christi',
-      body: 'Soul of Christ, sanctify me. Body of Christ, save me. Blood of Christ, inebriate me. Water from the side of Christ, wash me. Passion of Christ, strengthen me. O Good Jesus, hear me. Within Thy wounds hide me. Let me not be separated from Thee. Defend me from the malignant enemy. At the hour of my death, call me, and bid me come to Thee, that with Thy saints I may praise Thee for all eternity. Amen.',
-      latinBody:
-        'Anima Christi, sanctifica me. Corpus Christi, salva me. Sanguis Christi, inebria me. Aqua lateris Christi, lava me. Passio Christi, conforta me. O bone Iesu, exaudi me. Intra vulnera tua absconde me. Ne quando separeris a me. Ab hoste maligno protege me. In hora mortis meae voca me, et iube me venire ad Te, ut cum sanctis tuis laudem Te in saecula. Amen.',
-    },
-    {
-      title: 'Apostles Creed',
-      latinTitle: 'Symbolum Apostolorum',
-      body: 'I believe in God, the Father Almighty, Creator of Heaven and earth; and in Jesus Christ, His only Son Our Lord, Who was conceived by the Holy Spirit, born of the Virgin Mary, suffered under Pontius Pilate, was crucified, died, and was buried; He descended into Hell; on the third day He rose again from the dead; He ascended into Heaven, and sitteth at the right hand of God, the Father almighty; from thence He shall come to judge the living and the dead. I believe in the Holy Spirit, the holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.',
-      latinBody:
-        'Credo in Deum Patrem omnipotentem, Creatorem caeli et terrae; et in Iesum Christum, Filium eius unicum, Dominum nostrum, qui conceptus est de Spiritu Sancto, natus ex Maria Virgine, passus sub Pontio Pilato, crucifixus, mortuus, et sepultus; descendit ad inferos; tertia die resurrexit a mortuis; ascendit ad caelos, sedet ad dexteram Dei Patris omnipotentis; inde venturus est iudicare vivos et mortuos. Credo in Spiritum Sanctum, sanctam Ecclesiam catholicam, communionem sanctorum, remissionem peccatorum, carnis resurrectionem, vitam aeternam. Amen.',
     },
     {
       title: 'Guardian Angel Prayer',
@@ -95,13 +102,6 @@ const App: FC = () => {
         'Domine, fac me instrumentum pacis tuae. Ubi odium est, ibi dilectionem seminem; ubi iniuria est, ibi veniam; ubi dubitatio est, ibi fidem; ubi desperatio est, ibi spem; ubi tenebrae sunt, ibi lucem; ubi tristitia est, ibi gaudium. O Divine Magister, concede ut non tantum quaeram consolationem, sed consolari; intellegere, sed intelligi; diligere, sed amari. Quia in dando accipimus, in dimittendo dimittimur, et in moriendo nascimur ad vitam aeternam. Amen.',
     },
     {
-      title: 'St. Michael the Archangel Prayer',
-      latinTitle: 'Oratio Sancti Michaëlis',
-      body: 'St. Michael the Archangel, defend us in battle. Be our protection against the wickedness and snares of the devil. May God rebuke him, we humbly pray; and do Thou, O Prince of the Heavenly Host, by the Divine Power of God, cast into hell Satan and all the evil spirits who roam throughout the world seeking the ruin of souls. Amen.',
-      latinBody:
-        'Sancte Michael Archangele, defende nos in proelio. Contra nequitiam et insidias diaboli esto praesidium. Deus, humiliter rogamus, repelle eum; et tu, Princeps Exercitus Caelestis, per Divinam Potentiam Dei, mitte in infernum Satanam et omnes spiritus malignos qui per orbem terrarum animas perditionem quaerunt. Amen.',
-    },
-    {
       title: 'Prayer to the Sacred Heart of Jesus',
       latinTitle: 'Oratio ad Sacratissimum Cor Iesu',
       body: 'My God, my Savior, I adore Your Sacred Heart, for that heart is the seat and source of all Your tenderest human affections for us sinners. It is the instrument and organ of Your love. It did beat for us. It yearned for us. It ached for our salvation. It was on fire through zeal, that the glory of God might be manifested in and by us. It is the channel of all Your graces and all Your virtues. O most Sacred symbol and Sacrament of Love, divine and human, in its fullness, Thou didst save me by Thy divine strength and Thy human affection, and then at length by that wonder-working blood, wherewith Thou didst overflow. O most Sacred, most loving Heart of Jesus, Thou art concealed in the Holy Eucharist, and Thou beat for us still. Now as then Thou save, Desiderio desideravi- "With desire I have desired." I worship Thee then with all my best love and awe, with my fervent affection, with my most subdued, most resolved will. O God when Thou dost condescend to suffer me to receive Thee, to eat and drink Thee, and Thou for a while take up Thy abode within me, O make my heart beat with Thy Heart. Purify it of all that is earthly, all that is proud and sensual, all that is hard and cruel, of all perversity, of all disorder, of all deadness. So fill it with Thee, that neither the events of the day nor the circumstances of the time may have power to ruffle it, but that in Thy love and Thy fear it may have peace. Amen.',
@@ -118,9 +118,9 @@ const App: FC = () => {
     {
       title: 'Prayer for the Holy Souls in Purgatory',
       latinTitle: 'Oratio pro Animabus in Purgatorio',
-      body: 'Eternal Father, I offer Thee the most precious blood of Thy Divine Son, Jesus, in union with the Masses said throughout the world today, for all the Holy Souls in Purgatory. Amen.',
+      body: 'Eternal Father, I offer Thee the most precious blood of Thy Divine Son, Jesus, in union with the Masses said throughout the world today, for all the Holy Souls in Purgatory, for sinners everywhere, for sinners in the universal Church, those in my own home and within my family. Amen.',
       latinBody:
-        'Pater aeternus, offero Tibi pretiosissimum sanguinem Filii Tui Divini Iesu, in unione cum Missis celebratis hodie per orbem terrarum, pro omnibus animabus sanctis in Purgatorio. Amen.',
+        'Pater aeternus, offero Tibi pretiosissimum sanguinem Filii Tui Divini Iesu, in unione cum Missis celebratis hodie per orbem terrarum, pro omnibus animabus sanctis in Purgatorio, pro peccatoribus ubique, pro peccatoribus in Ecclesia universali, pro illis in domo mea et in familia mea. Amen.',
     },
     {
       title: 'St Gemma Galgani Prayer',
@@ -133,6 +133,10 @@ const App: FC = () => {
       title: 'St Joseph Terror of Demons Prayer',
       latinTitle: 'Oratio Sancti Ioseph Terrorem Daemonum',
       body: 'Saint Joseph, Terror of Demons, cast your solemn gaze upon the devil and all his minions, and protect us with your mighty staff. You fled through the night to avoid the devil’s wicked designs; now with the power of God, smite the demons as they flee from you! Grant special protection, we pray, for children, fathers, families, and the dying. By God’s grace, no demon dares approach while you are near; so we beg of you, always be near us! Amen.',
+    },
+    {
+      title: 'Novena to Sacred Heart of Jesus',
+      body: 'I. O my Jesus, you have said: "Truly I say to you, ask and you will receive, seek and you will find, knock and it will be opened to you." Behold I knock, I seek, I ask for the grace of... (here mention your request).\nOur Father... Hail Mary... Glory be... Sacred Heart of Jesus, I place all my trust in you.\n\nII. O my Jesus, you have said: "Truly I say to you,whatever you ask of the Father in my name, He will give it to you." Behold, in your name I ask the Father for the grace of... (here mention your request).\nOur Father... Hail Mary... Glory be... Sacred Heart of Jesus, I place all my trust in you.\n\nIII. O my Jesus, you have said: "Truly I say to you, heaven and earth will pass away but my words will not pass away." Encouraged by your infallible words I now ask you for the grace of...(here mention your request).\nOur Father... Hail Mary... Glory be... Sacred Heart of Jesus, I place all my trust in You.\n\nO Sacred Heart of Jesus, for whom it is impossible not to have compassion on the afflicted, have pity on us miserable sinners and grant us the grace which we ask of you, through the Sorrowful and Immaculate Heart of Mary, your tender Mother and ours.\n\nSay the Hail,Holy Queen, and add: St.Joseph, foster father of Jesus, pray for us.',
     },
     {
       title: 'Most Precious Blood of Jesus Prayer',
