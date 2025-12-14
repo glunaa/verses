@@ -81,6 +81,12 @@ const App: FC = () => {
         'Angelus Domini, custos meus, cui me commissit divina providentia, praesens esto semper ad me, ut me luceas, custodi, rege, et gubernes. Amen.',
     },
     {
+      title:'Most Sacred Heart of Jesus',
+      latinTitle:'Cor Jesu Sacratissimum',
+      body:'Most Sacred Heart of Jesus, Have Mercy on us',
+      latinBody:'Cor Jesu Sacratissimum miserere nobis.'
+    },
+    {
       title: 'Jesus Prayer',
       latinTitle: 'Oratio Iesu',
       body: 'Lord Jesus Christ, Son of God, have mercy on me, a sinner.',
