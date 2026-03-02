@@ -1,7 +1,10 @@
-import { FC, useState, useEffect, useCallback } from 'react';
+import { FC, useState, useEffect, useCallback, useRef } from 'react';
 import Verse from './components/Verse';
 import { verseProps } from './components/Verse';
+import Rosary from './components/Rosary';
 import './App.css';
+
+type AppMode = 'prayers' | 'rosary';
 
 const App: FC = () => {
   const prayers: verseProps[] = [
@@ -164,6 +167,8 @@ const App: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLatin, setShowLatin] = useState(false);
   const [search, setSearch] = useState('');
+  const [mode, setMode] = useState<AppMode>('prayers');
+  const verseRef = useRef<HTMLDivElement>(null);
 
   const filteredPrayers = prayers.filter((prayer) =>
     prayer.title.toLowerCase().includes(search.toLowerCase())
@@ -187,72 +192,113 @@ const App: FC = () => {
     setCurrentPrayerIndex(randomIndex);
   }, [prayers.length]);
    */
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
+  // Scroll verse to top when prayer changes
+  useEffect(() => {
+    if (verseRef.current) verseRef.current.scrollTop = 0;
+  }, [currentPrayerIndex]);
+
+  // Keyboard: arrow keys navigate, Escape closes menu
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === 'ArrowLeft') handlePrev();
       else if (event.key === 'ArrowRight') handleNext();
+      else if (event.key === 'Escape') setIsMenuOpen(false);
     };
-
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [handlePrev, handleNext]);
 
   return (
     <div className="parent">
+      {isMenuOpen && <div className="menu-overlay" onClick={() => setIsMenuOpen(false)} />}
+
       <div className="container">
         <div className="navbar">
-          <div className="hamburger" onClick={toggleMenu}>
-            <div className="line"></div>
-            <div className="line"></div>
-            <div className="line"></div>
+          {mode === 'prayers' && (
+            <div className="hamburger" onClick={toggleMenu}>
+              <div className="line"></div>
+              <div className="line"></div>
+              <div className="line"></div>
+            </div>
+          )}
+          <h4>{mode === 'prayers' ? 'Prayers' : 'The Rosary'}</h4>
+          <div className="mode-toggle">
+            <button
+              className={`mode-btn${mode === 'prayers' ? ' active' : ''}`}
+              onClick={() => setMode('prayers')}
+            >
+              Prayers
+            </button>
+            <button
+              className={`mode-btn${mode === 'rosary' ? ' active' : ''}`}
+              onClick={() => setMode('rosary')}
+            >
+              Rosary
+            </button>
           </div>
-          <h4>Prayers</h4>
         </div>
 
-        {isMenuOpen && (
-          <div className="prayer-menu">
-            <input
-              type="text"
-              placeholder="Search prayers..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="search-input"
-            />
-            <ul>
-              {filteredPrayers.map((prayer, index) => (
-                <li
-                  key={index}
-                  onClick={() => {
-                    setCurrentPrayerIndex(prayers.indexOf(prayer));
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  {prayer.title}
-                </li>
-              ))}
-            </ul>
-          </div>
+        {mode === 'prayers' && (
+          <>
+            {isMenuOpen && (
+              <div className="prayer-menu">
+                <input
+                  type="text"
+                  placeholder="Search prayers..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="search-input"
+                />
+                <ul>
+                  {filteredPrayers.map((prayer, index) => (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        setCurrentPrayerIndex(prayers.indexOf(prayer));
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      {prayer.title}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div ref={verseRef} className="verse">
+              <Verse
+                title={prayers[currentPrayerIndex].title}
+                latinTitle={prayers[currentPrayerIndex].latinTitle}
+                body={prayers[currentPrayerIndex].body}
+                latinBody={prayers[currentPrayerIndex].latinBody}
+                showLatin={showLatin}
+              />
+            </div>
+
+            <p className="prayer-counter">
+              {currentPrayerIndex + 1} / {prayers.length}
+            </p>
+
+            <div className="buttons">
+              <button onClick={handlePrev}>&#8592; Previous</button>
+              <button onClick={handleNext}>Next &#8594;</button>
+              {prayers[currentPrayerIndex].latinBody && (
+                <button onClick={() => setShowLatin(!showLatin)}>
+                  {showLatin ? 'Show English' : 'Show Latin'}
+                </button>
+              )}
+            </div>
+          </>
         )}
 
-        <Verse
-          title={prayers[currentPrayerIndex].title}
-          latinTitle={prayers[currentPrayerIndex].latinTitle}
-          body={prayers[currentPrayerIndex].body}
-          latinBody={prayers[currentPrayerIndex].latinBody}
-          showLatin={showLatin}
-        />
-
-        <div className="buttons">
-          <button onClick={handlePrev}>&#8592; Previous</button>
-          <button onClick={handleNext}>Next &#8594;</button>
-          {prayers[currentPrayerIndex].latinBody && (
-            <button onClick={() => setShowLatin(!showLatin)}>
-              {showLatin ? 'Show English' : 'Show Latin'}
-            </button>
-          )}
-        </div>
+        {mode === 'rosary' && (
+          <Rosary
+            showLatin={showLatin}
+            onToggleLatin={() => setShowLatin((prev) => !prev)}
+          />
+        )}
       </div>
     </div>
   );

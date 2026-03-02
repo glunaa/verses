@@ -10,10 +10,10 @@ export interface verseProps {
 
 const Verse: FC<verseProps> = ({ title, latinTitle, body, latinBody, showLatin = false }) => {
   return (
-    <div className="verse">
+    <>
       <h2>{showLatin && latinTitle ? latinTitle : title}</h2>
       <p>{showLatin && latinBody ? latinBody : body}</p>
-    </div>
+    </>
   );
 };
 

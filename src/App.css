@@ -132,6 +132,268 @@ button:focus {
   outline: none;
 }
 
+/* ── Menu overlay (closes menu on outside click) ─────────────────── */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+/* ── Prayer counter ──────────────────────────────────────────────── */
+.prayer-counter {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* ── Search input ────────────────────────────────────────────────── */
+.search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 5px;
+  color: white;
+  font-size: 0.875rem;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ── Mode toggle (Prayers / Rosary) ─────────────────────────────── */
+.mode-toggle {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.mode-btn {
+  margin: 0;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.mode-btn.active {
+  background: #007bff;
+  border-color: #007bff;
+}
+
+.mode-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Rosary: mystery selector ────────────────────────────────────── */
+.rosary-selector {
+  text-align: center;
+}
+
+.rosary-intro {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 18px;
+  font-size: 0.95rem;
+}
+
+.rosary-intro-sub {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.mystery-set-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.mystery-set-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin: 0;
+}
+
+.mystery-set-btn.active {
+  background: rgba(0, 123, 255, 0.35);
+  border-color: #007bff;
+}
+
+.mystery-set-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.mystery-set-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.mystery-set-latin {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.mystery-set-days {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.rosary-start-btn {
+  width: 100%;
+  padding: 13px;
+  font-size: 1rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.rosary-start-btn:hover {
+  background: #0056b3;
+}
+
+/* ── Rosary: step-by-step guide ──────────────────────────────────── */
+.rosary-guide {
+  text-align: center;
+}
+
+.rosary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.rosary-set-tag {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+.rosary-reset-btn {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.rosary-reset-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.rosary-progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.rosary-progress-fill {
+  height: 100%;
+  background: #007bff;
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.rosary-step-count {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 10px;
+}
+
+/* ── Bead tracker ─────────────────────────────────────────────────── */
+.bead-tracker {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+}
+
+.bead-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bead-decade-label {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.3);
+  width: 12px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.bead-decade-label.active-decade {
+  color: #7fc3ff;
+  font-weight: bold;
+}
+
+.bead {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.bead.past {
+  background: rgba(0, 123, 255, 0.45);
+  border-color: #007bff;
+}
+
+.bead.current {
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+/* ── Rosary body (prayer text) ───────────────────────────────────── */
+.rosary-body {
+  text-align: left;
+}
+
+.rosary-subheading {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-style: italic;
+  margin-bottom: 12px;
+  text-align: center;
+  white-space: normal;
+}
+
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .container {
