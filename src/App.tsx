@@ -196,48 +196,48 @@ const App: FC = () => {
 
   return (
     <div className="parent">
-      <div className="hamburger" onClick={toggleMenu}>
-        <div className="line"></div>
-        <div className="line"></div>
-        <div className="line"></div>
-      </div>
-
-      {isMenuOpen && (
-        <div className="prayer-menu">
-          <input
-            type="text"
-            placeholder="Search prayers..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="search-input"
-          />
-          <ul>
-            {filteredPrayers.map((prayer, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  setCurrentPrayerIndex(prayers.indexOf(prayer));
-                  setIsMenuOpen(false);
-                }}
-              >
-                {prayer.title}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
       <div className="container">
-        <h4>Prayers</h4>
-        <div className="verse">
-          <Verse
-            title={prayers[currentPrayerIndex].title}
-            latinTitle={prayers[currentPrayerIndex].latinTitle} // optional
-            body={prayers[currentPrayerIndex].body}
-            latinBody={prayers[currentPrayerIndex].latinBody} // optional
-            showLatin={showLatin}
-          />
+        <div className="navbar">
+          <div className="hamburger" onClick={toggleMenu}>
+            <div className="line"></div>
+            <div className="line"></div>
+            <div className="line"></div>
+          </div>
+          <h4>Prayers</h4>
         </div>
+
+        {isMenuOpen && (
+          <div className="prayer-menu">
+            <input
+              type="text"
+              placeholder="Search prayers..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="search-input"
+            />
+            <ul>
+              {filteredPrayers.map((prayer, index) => (
+                <li
+                  key={index}
+                  onClick={() => {
+                    setCurrentPrayerIndex(prayers.indexOf(prayer));
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  {prayer.title}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <Verse
+          title={prayers[currentPrayerIndex].title}
+          latinTitle={prayers[currentPrayerIndex].latinTitle}
+          body={prayers[currentPrayerIndex].body}
+          latinBody={prayers[currentPrayerIndex].latinBody}
+          showLatin={showLatin}
+        />
 
         <div className="buttons">
           <button onClick={handlePrev}>&#8592; Previous</button>
