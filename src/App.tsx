@@ -2,9 +2,14 @@ import { FC, useState, useEffect, useCallback, useRef } from 'react';
 import Verse from './components/Verse';
 import { verseProps } from './components/Verse';
 import Rosary from './components/Rosary';
+import Stations from './components/Stations';
+import Chaplet from './components/Chaplet';
+import { getLiturgicalInfo } from './utils/liturgicalSeason';
 import './App.css';
 
-type AppMode = 'prayers' | 'rosary';
+const liturgical = getLiturgicalInfo();
+
+type AppMode = 'prayers' | 'rosary' | 'stations' | 'chaplet';
 
 const App: FC = () => {
   const prayers: verseProps[] = [
@@ -163,12 +168,28 @@ const App: FC = () => {
     },
   ];
 
-  const [currentPrayerIndex, setCurrentPrayerIndex] = useState(0);
+  const [currentPrayerIndex, setCurrentPrayerIndex] = useState(() => {
+    const saved = localStorage.getItem('lastPrayerIndex');
+    const idx = saved ? parseInt(saved, 10) : 0;
+    return isNaN(idx) || idx >= prayers.length ? 0 : idx;
+  });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLatin, setShowLatin] = useState(false);
   const [search, setSearch] = useState('');
   const [mode, setMode] = useState<AppMode>('prayers');
+  const [dimMode, setDimMode] = useState(false);
+  const [fontScale, setFontScale] = useState(() => {
+    return parseFloat(localStorage.getItem('fontScale') || '1');
+  });
   const verseRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--font-scale', String(fontScale));
+    localStorage.setItem('fontScale', String(fontScale));
+  }, [fontScale]);
+
+  const growFont = () => setFontScale((s) => Math.min(parseFloat((s + 0.15).toFixed(2)), 2));
+  const shrinkFont = () => setFontScale((s) => Math.max(parseFloat((s - 0.15).toFixed(2)), 0.7));
 
   const filteredPrayers = prayers.filter((prayer) =>
     prayer.title.toLowerCase().includes(search.toLowerCase())
@@ -194,8 +215,9 @@ const App: FC = () => {
    */
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
-  // Scroll verse to top when prayer changes
+  // Persist last prayer & scroll to top when prayer changes
   useEffect(() => {
+    localStorage.setItem('lastPrayerIndex', String(currentPrayerIndex));
     if (verseRef.current) verseRef.current.scrollTop = 0;
   }, [currentPrayerIndex]);
 
@@ -210,11 +232,43 @@ const App: FC = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [handlePrev, handleNext]);
 
+  // Swipe gestures (mobile)
+  useEffect(() => {
+    let startX = 0;
+    const onTouchStart = (e: TouchEvent) => { startX = e.touches[0].clientX; };
+    const onTouchEnd = (e: TouchEvent) => {
+      const delta = e.changedTouches[0].clientX - startX;
+      if (Math.abs(delta) < 50) return; // ignore small movements
+      if (mode === 'prayers') {
+        delta < 0 ? handleNext() : handlePrev();
+      }
+    };
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [mode, handleNext, handlePrev]);
+
   return (
     <div className="parent">
+      {dimMode && (
+        <div className="dim-overlay" onClick={() => setDimMode(false)}>
+          <span className="dim-hint">tap to dismiss</span>
+        </div>
+      )}
       {isMenuOpen && <div className="menu-overlay" onClick={() => setIsMenuOpen(false)} />}
 
       <div className="container">
+        <div
+          className="season-banner"
+          style={{ borderColor: liturgical.color }}
+        >
+          <span style={{ color: liturgical.color }}>✦</span>
+          {showLatin ? liturgical.latinSeason : liturgical.season}
+        </div>
+
         <div className="navbar">
           {mode === 'prayers' && (
             <div className="hamburger" onClick={toggleMenu}>
@@ -223,20 +277,17 @@ const App: FC = () => {
               <div className="line"></div>
             </div>
           )}
-          <h4>{mode === 'prayers' ? 'Prayers' : 'The Rosary'}</h4>
+          <h4>{{ prayers: 'Prayers', rosary: 'The Rosary', stations: 'Stations', chaplet: 'Divine Mercy' }[mode]}</h4>
+          <div className="font-controls">
+            <button className="font-btn" onClick={shrinkFont} title="Decrease font size">A−</button>
+            <button className="font-btn" onClick={growFont} title="Increase font size">A+</button>
+            <button className="dim-btn" onClick={() => setDimMode(true)} title="Dim screen for night prayer">☽</button>
+          </div>
           <div className="mode-toggle">
-            <button
-              className={`mode-btn${mode === 'prayers' ? ' active' : ''}`}
-              onClick={() => setMode('prayers')}
-            >
-              Prayers
-            </button>
-            <button
-              className={`mode-btn${mode === 'rosary' ? ' active' : ''}`}
-              onClick={() => setMode('rosary')}
-            >
-              Rosary
-            </button>
+            <button className={`mode-btn${mode === 'prayers' ? ' active' : ''}`} onClick={() => setMode('prayers')}>Prayers</button>
+            <button className={`mode-btn${mode === 'rosary' ? ' active' : ''}`} onClick={() => setMode('rosary')}>Rosary</button>
+            <button className={`mode-btn${mode === 'stations' ? ' active' : ''}`} onClick={() => setMode('stations')}>Stations</button>
+            <button className={`mode-btn${mode === 'chaplet' ? ' active' : ''}`} onClick={() => setMode('chaplet')}>Chaplet</button>
           </div>
         </div>
 
@@ -295,6 +346,20 @@ const App: FC = () => {
 
         {mode === 'rosary' && (
           <Rosary
+            showLatin={showLatin}
+            onToggleLatin={() => setShowLatin((prev) => !prev)}
+          />
+        )}
+
+        {mode === 'stations' && (
+          <Stations
+            showLatin={showLatin}
+            onToggleLatin={() => setShowLatin((prev) => !prev)}
+          />
+        )}
+
+        {mode === 'chaplet' && (
+          <Chaplet
             showLatin={showLatin}
             onToggleLatin={() => setShowLatin((prev) => !prev)}
           />

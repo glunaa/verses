@@ -1,6 +1,19 @@
 import { FC, useState, useEffect, useCallback, useRef } from 'react';
 import { MYSTERY_SETS, ROSARY_PRAYERS, MysterySet } from '../data/rosaryData';
 
+// 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat → mystery set index
+// Joyful=0, Sorrowful=1, Glorious=2, Luminous=3
+const DAY_TO_SET: Record<number, number> = {
+  0: 2, // Sunday   → Glorious
+  1: 0, // Monday   → Joyful
+  2: 1, // Tuesday  → Sorrowful
+  3: 2, // Wednesday→ Glorious
+  4: 3, // Thursday → Luminous
+  5: 1, // Friday   → Sorrowful
+  6: 0, // Saturday → Joyful
+};
+const todaySetIndex = DAY_TO_SET[new Date().getDay()];
+
 interface RosaryProps {
   showLatin: boolean;
   onToggleLatin: () => void;
@@ -167,7 +180,7 @@ const BeadTracker: FC<{ step: RosaryStep }> = ({ step }) => {
 
 // ─── Main Rosary component ────────────────────────────────────────────────────
 const Rosary: FC<RosaryProps> = ({ showLatin, onToggleLatin }) => {
-  const [setIndex, setSetIndex] = useState(0);
+  const [setIndex, setSetIndex] = useState(todaySetIndex);
   const [stepIndex, setStepIndex] = useState(0);
   const [started, setStarted] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -218,6 +231,9 @@ const Rosary: FC<RosaryProps> = ({ showLatin, onToggleLatin }) => {
               className={`mystery-set-btn${i === setIndex ? ' active' : ''}`}
               onClick={() => setSetIndex(i)}
             >
+              {i === todaySetIndex && (
+                <span className="today-badge">Today</span>
+              )}
               <span className="mystery-set-name">{ms.name}</span>
               <span className="mystery-set-latin">{ms.latinName}</span>
               <span className="mystery-set-days">{ms.days}</span>
