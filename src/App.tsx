@@ -259,7 +259,7 @@ const App: FC = () => {
       const delta = e.changedTouches[0].clientX - startX;
       if (Math.abs(delta) < 50) return; // ignore small movements
       if (mode === 'prayers') {
-        delta < 0 ? handleNext() : handlePrev();
+        if (delta < 0) handleNext(); else handlePrev();
       }
     };
     window.addEventListener('touchstart', onTouchStart, { passive: true });

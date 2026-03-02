@@ -44,13 +44,11 @@ export function getLiturgicalInfo(date: Date = new Date()): LiturgicalInfo {
   // Key dates
   const ashWednesday   = addDays(easter, -46);
   const palmSunday     = addDays(easter, -7);
-  const holyThursday   = addDays(easter, -3);
   const goodFriday     = addDays(easter, -2);
   const holySaturday   = addDays(easter, -1);
   const ascension      = addDays(easter, 39);
   const pentecost      = addDays(easter, 49);
   const christmasDay   = new Date(year, 11, 25); // Dec 25
-  const epiphany       = new Date(year, 0, 6);   // Jan 6
 
   // Advent: 4 Sundays before Christmas
   // Find the Sunday on or before Nov 30 (St. Andrew's day) closest to Dec 25
