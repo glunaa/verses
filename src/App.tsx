@@ -64,8 +64,7 @@ const App: FC = () => {
       title: 'St. Michael the Archangel Prayer',
       latinTitle: 'Oratio Sancti Michaëlis',
       body: 'St. Michael the Archangel, defend us in battle. Be our protection against the wickedness and snares of the devil. May God rebuke him, we humbly pray; and do Thou, O Prince of the Heavenly Host, by the Divine Power of God, cast into hell Satan and all the evil spirits who roam throughout the world seeking the ruin of souls. Amen.',
-      latinBody:
-        'Sancte Michael Archangele, defende nos in proelio. Contra nequitiam et insidias diaboli esto praesidium. Deus, humiliter rogamus, repelle eum; et tu, Princeps Exercitus Caelestis, per Divinam Potentiam Dei, mitte in infernum Satanam et omnes spiritus malignos qui per orbem terrarum animas perditionem quaerunt. Amen.',
+      latinBody:'Sáncte Míchael Archángele, defénde nos in proélio, cóntra nequítiam et insídias diáboli ésto præsídium. Ímperet ílli Déus, súpplices deprecámur: tuque, prínceps milítiæ cæléstis, Sátanam aliósque spíritus malígnos, qui ad perditiónem animárum pervagántur in múndo, divína virtúte, in inférnum detrúde. Ámen.'
     },
     {
       title: 'An Act of Perfect Contrition',
@@ -80,6 +79,12 @@ const App: FC = () => {
       body: 'Angel of God, my guardian dear, to whom God’s love commits me here, ever this day (night) be at my side, to light and guard, to rule and guide. Amen.',
       latinBody:
         'Angelus Domini, custos meus, cui me commissit divina providentia, praesens esto semper ad me, ut me luceas, custodi, rege, et gubernes. Amen.',
+    },
+    {
+      title:'Most Sacred Heart of Jesus',
+      latinTitle:'Cor Jesu Sacratissimum',
+      body:'Most Sacred Heart of Jesus, Have Mercy on us',
+      latinBody:'Cor Jesu Sacratissimum miserere nobis.'
     },
     {
       title: 'Jesus Prayer',
