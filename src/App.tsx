@@ -302,12 +302,12 @@ const App: FC = () => {
             <button className="font-btn" onClick={growFont} title="Increase font size">A+</button>
             <button className="dim-btn" onClick={() => setDimMode(true)} title="Dim screen for night prayer">☽</button>
           </div>
-          <div className="mode-toggle">
-            <button className={`mode-btn${mode === 'prayers' ? ' active' : ''}`} onClick={() => setMode('prayers')}>Prayers</button>
-            <button className={`mode-btn${mode === 'rosary' ? ' active' : ''}`} onClick={() => setMode('rosary')}>Rosary</button>
-            <button className={`mode-btn${mode === 'stations' ? ' active' : ''}`} onClick={() => setMode('stations')}>Stations</button>
-            <button className={`mode-btn${mode === 'chaplet' ? ' active' : ''}`} onClick={() => setMode('chaplet')}>Chaplet</button>
-          </div>
+        </div>
+        <div className="mode-toggle">
+          <button className={`mode-btn${mode === 'prayers' ? ' active' : ''}`} onClick={() => setMode('prayers')}>Prayers</button>
+          <button className={`mode-btn${mode === 'rosary' ? ' active' : ''}`} onClick={() => setMode('rosary')}>Rosary</button>
+          <button className={`mode-btn${mode === 'stations' ? ' active' : ''}`} onClick={() => setMode('stations')}>Stations</button>
+          <button className={`mode-btn${mode === 'chaplet' ? ' active' : ''}`} onClick={() => setMode('chaplet')}>Chaplet</button>
         </div>
 
         {mode === 'prayers' && (
