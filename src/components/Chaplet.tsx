@@ -1,4 +1,5 @@
 import { FC, useState, useEffect, useCallback, useRef } from 'react';
+import SevenSorrows from './SevenSorrows';
 
 interface ChapletProps {
   showLatin: boolean;
@@ -157,8 +158,8 @@ const BeadTracker: FC<{ step: ChapletStep }> = ({ step }) => {
 
 // ─── Main component ───────────────────────────────────────────────────────────
 const Chaplet: FC<ChapletProps> = ({ showLatin, onToggleLatin }) => {
+  const [chapletType, setChapletType] = useState<'divine-mercy' | 'seven-sorrows' | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
-  const [started, setStarted] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
 
   const goNext = useCallback(() => setStepIndex((i) => Math.min(i + 1, TOTAL - 1)), []);
@@ -169,29 +170,43 @@ const Chaplet: FC<ChapletProps> = ({ showLatin, onToggleLatin }) => {
   }, [stepIndex]);
 
   useEffect(() => {
-    if (!started) return;
+    if (!chapletType || chapletType === 'seven-sorrows') return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') goNext();
       else if (e.key === 'ArrowLeft') goPrev();
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [started, goNext, goPrev]);
+  }, [chapletType, goNext, goPrev]);
 
-  if (!started) {
+  if (chapletType === 'seven-sorrows') {
+    return (
+      <SevenSorrows
+        showLatin={showLatin}
+        onToggleLatin={onToggleLatin}
+        onBack={() => setChapletType(null)}
+      />
+    );
+  }
+
+  if (!chapletType) {
     return (
       <div className="rosary-selector" style={{ textAlign: 'center' }}>
         <p className="rosary-intro">
-          Chaplet of Divine Mercy
+          Chaplets
           <br />
-          <span className="rosary-intro-sub">
-            Prayed on standard rosary beads. Revealed by Our Lord to St. Faustina.
-            <br />Use ← → arrows or buttons to advance.
-          </span>
+          <span className="rosary-intro-sub">Choose a chaplet to pray. Use ← → arrows or buttons to advance.</span>
         </p>
-        <button className="rosary-start-btn" onClick={() => { setStepIndex(0); setStarted(true); }}>
-          Begin the Chaplet
-        </button>
+        <div className="mystery-set-grid">
+          <button className="mystery-set-btn" onClick={() => { setStepIndex(0); setChapletType('divine-mercy'); }}>
+            <span className="mystery-set-name">Divine Mercy</span>
+            <span className="mystery-set-days">Chaplet of St. Faustina</span>
+          </button>
+          <button className="mystery-set-btn" onClick={() => setChapletType('seven-sorrows')}>
+            <span className="mystery-set-name">Seven Sorrows</span>
+            <span className="mystery-set-days">Chaplet of Our Lady</span>
+          </button>
+        </div>
       </div>
     );
   }
@@ -209,7 +224,7 @@ const Chaplet: FC<ChapletProps> = ({ showLatin, onToggleLatin }) => {
         <span className="rosary-set-tag">
           {showLatin ? 'Coronilla Misericordiae Divinae' : 'Divine Mercy Chaplet'}
         </span>
-        <button className="rosary-reset-btn" onClick={() => { setStarted(false); setStepIndex(0); }}>
+        <button className="rosary-reset-btn" onClick={() => { setChapletType(null); setStepIndex(0); }}>
           ↩ Back
         </button>
       </div>
@@ -230,7 +245,7 @@ const Chaplet: FC<ChapletProps> = ({ showLatin, onToggleLatin }) => {
       <div className="buttons">
         <button onClick={goPrev} disabled={isFirst}>← Previous</button>
         {isLast ? (
-          <button onClick={() => { setStarted(false); setStepIndex(0); }}>Finish ✓</button>
+          <button onClick={() => { setChapletType(null); setStepIndex(0); }}>Finish ✓</button>
         ) : (
           <button onClick={goNext}>Next →</button>
         )}

@@ -168,6 +168,54 @@ const App: FC = () => {
     },
 
     {
+      title: 'Confiteor',
+      latinTitle: 'Confiteor',
+      body: 'I confess to almighty God and to you, my brothers and sisters, that I have greatly sinned, in my thoughts and in my words, in what I have done and in what I have failed to do, through my fault, through my fault, through my most grievous fault; therefore I ask blessed Mary ever-Virgin, all the Angels and Saints, and you, my brothers and sisters, to pray for me to the Lord our God.',
+      latinBody: 'Confiteor Deo omnipotenti et vobis, fratres, quia peccavi nimis cogitatione, verbo, opere et omissione: mea culpa, mea culpa, mea maxima culpa. Ideo precor beatam Mariam semper Virginem, omnes Angelos et Sanctos, et vos, fratres, orare pro me ad Dominum Deum nostrum.',
+    },
+    {
+      title: 'Act of Faith',
+      latinTitle: 'Actus Fidei',
+      body: 'O my God, I firmly believe that You are one God in three divine Persons, Father, Son, and Holy Spirit. I believe that Your divine Son became man and died for our sins, and that He will come to judge the living and the dead. I believe these and all the truths which the holy Catholic Church teaches, because You have revealed them, who can neither deceive nor be deceived. Amen.',
+      latinBody: 'Domine Deus, firma fide credo et confiteor omnia et singula quae sancta Ecclesia catholica proponit, quia Tu, Deus, ea omnia revelasti, qui es aeterna veritas et sapientia quae nec fallere nec falli potest. Amen.',
+    },
+    {
+      title: 'Act of Hope',
+      latinTitle: 'Actus Spei',
+      body: 'O my God, relying on Your almighty power and infinite mercy and promises, I hope to obtain pardon of my sins, the help of Your grace, and life everlasting, through the merits of Jesus Christ, my Lord and Redeemer. Amen.',
+      latinBody: 'Domine Deus, spero per gratiam Tuam remissionem omnium peccatorum et post hanc vitam aeternam felicitatem, quia Tu promisisti, qui es infinite bonus et misericors. Amen.',
+    },
+    {
+      title: 'Act of Charity',
+      latinTitle: 'Actus Caritatis',
+      body: 'O my God, I love You above all things, with my whole heart and soul, because You are all-good and worthy of all love. I love my neighbor as myself for the love of You. I forgive all who have injured me and ask pardon of all whom I have injured. Amen.',
+      latinBody: 'Domine Deus, amo Te super omnia et proximum meum propter Te, quia Tu es summum bonum et infinita bonitas digna omni amore. In hoc amore vivo et mori volo. Amen.',
+    },
+    {
+      title: 'Memorare',
+      latinTitle: 'Memorare',
+      body: 'Remember, O most gracious Virgin Mary, that never was it known that anyone who fled to thy protection, implored thy help, or sought thine intercession was left unaided. Inspired by this confidence, I fly unto thee, O Virgin of virgins, my mother; to thee do I come, before thee I stand, sinful and sorrowful. O Mother of the Word Incarnate, despise not my petitions, but in thy mercy hear and answer me. Amen.',
+      latinBody: 'Memorare, O piissima Virgo Maria, non esse auditum a saeculo, quemquam ad tua currentem praesidia, tua implorantem auxilia, tua petentem suffragia, esse derelictum. Ego tali animatus confidentia, ad te, Virgo Virginum, Mater, curro; ad te venio; coram te gemens peccator assisto. Noli, Mater Verbi, verba mea despicere; sed audi propitia et exaudi. Amen.',
+    },
+    {
+      title: 'Angelus',
+      latinTitle: 'Angelus Domini',
+      body: 'V. The Angel of the Lord declared unto Mary.\nR. And she conceived of the Holy Spirit.\n\nHail Mary, full of grace...\n\nV. Behold the handmaid of the Lord.\nR. Be it done unto me according to thy word.\n\nHail Mary, full of grace...\n\nV. And the Word was made Flesh.\nR. And dwelt among us.\n\nHail Mary, full of grace...\n\nV. Pray for us, O Holy Mother of God.\nR. That we may be made worthy of the promises of Christ.\n\nLet us pray:\nPour forth, we beseech Thee, O Lord, Thy grace into our hearts; that we, to whom the Incarnation of Christ, Thy Son, was made known by the message of an Angel, may by His Passion and Cross be brought to the glory of His Resurrection. Through the same Christ Our Lord. Amen.',
+      latinBody: 'V. Angelus Domini nuntiavit Mariae.\nR. Et concepit de Spiritu Sancto.\n\nAve Maria, gratia plena...\n\nV. Ecce ancilla Domini.\nR. Fiat mihi secundum verbum tuum.\n\nAve Maria, gratia plena...\n\nV. Et Verbum caro factum est.\nR. Et habitavit in nobis.\n\nAve Maria, gratia plena...\n\nV. Ora pro nobis, sancta Dei Genitrix.\nR. Ut digni efficiamur promissionibus Christi.\n\nOremus:\nGratiam tuam, quaesumus, Domine, mentibus nostris infunde; ut qui, Angelo nuntiante, Christi Filii tui Incarnationem cognovimus, per passionem eius et crucem ad resurrectionis gloriam perducamur. Per eundem Christum Dominum nostrum. Amen.',
+    },
+    {
+      title: 'Regina Caeli',
+      latinTitle: 'Regina Caeli',
+      body: 'Queen of Heaven, rejoice, alleluia.\nFor He whom you did merit to bear, alleluia.\nHas risen, as He said, alleluia.\nPray for us to God, alleluia.\n\nV. Rejoice and be glad, O Virgin Mary, alleluia.\nR. For the Lord has truly risen, alleluia.\n\nLet us pray:\nO God, who gave joy to the world through the resurrection of Thy Son, our Lord Jesus Christ, grant, we beseech Thee, that through the intercession of the Virgin Mary, His Mother, we may obtain the joys of everlasting life. Through the same Christ our Lord. Amen.',
+      latinBody: 'Regina caeli, laetare, alleluia.\nQuia quem meruisti portare, alleluia.\nResurrexit, sicut dixit, alleluia.\nOra pro nobis Deum, alleluia.\n\nV. Gaude et laetare, Virgo Maria, alleluia.\nR. Quia surrexit Dominus vere, alleluia.\n\nOremus:\nDeus, qui per resurrectionem Filii tui, Domini nostri Iesu Christi, mundum laetificare dignatus es: praesta, quaesumus, ut per eius Genetricem Virginem Mariam, perpetuae capiamus gaudia vitae. Per eundem Christum Dominum nostrum. Amen.',
+    },
+    {
+      title: 'Litany of the Sacred Heart',
+      latinTitle: 'Litania Sacratissimi Cordis Iesu',
+      body: 'Lord, have mercy. Lord, have mercy.\nChrist, have mercy. Christ, have mercy.\nLord, have mercy. Lord, have mercy.\n\nGod our Father in Heaven, have mercy on us.\nGod the Son, Redeemer of the world, have mercy on us.\nGod the Holy Spirit, have mercy on us.\nHoly Trinity, one God, have mercy on us.\n\nHeart of Jesus, Son of the Eternal Father, have mercy on us.\nHeart of Jesus, formed by the Holy Spirit in the womb of the Virgin Mother, have mercy on us.\nHeart of Jesus, one with the Eternal Word, have mercy on us.\nHeart of Jesus, infinite in majesty, have mercy on us.\nHeart of Jesus, holy temple of God, have mercy on us.\nHeart of Jesus, tabernacle of the Most High, have mercy on us.\nHeart of Jesus, house of God and gate of heaven, have mercy on us.\nHeart of Jesus, aflame with love for us, have mercy on us.\nHeart of Jesus, source of justice and love, have mercy on us.\nHeart of Jesus, full of goodness and love, have mercy on us.\nHeart of Jesus, well-spring of all virtue, have mercy on us.\nHeart of Jesus, worthy of all praise, have mercy on us.\nHeart of Jesus, king and center of all hearts, have mercy on us.\nHeart of Jesus, treasure-house of wisdom and knowledge, have mercy on us.\nHeart of Jesus, in whom there dwells the fullness of God, have mercy on us.\nHeart of Jesus, in whom the Father is well pleased, have mercy on us.\nHeart of Jesus, from whose fullness we have all received, have mercy on us.\nHeart of Jesus, desire of the everlasting hills, have mercy on us.\nHeart of Jesus, patient and full of mercy, have mercy on us.\nHeart of Jesus, generous to all who turn to you, have mercy on us.\nHeart of Jesus, fountain of life and holiness, have mercy on us.\nHeart of Jesus, atonement for our sins, have mercy on us.\nHeart of Jesus, overwhelmed with insults, have mercy on us.\nHeart of Jesus, broken for our sins, have mercy on us.\nHeart of Jesus, obedient even to death, have mercy on us.\nHeart of Jesus, pierced by a lance, have mercy on us.\nHeart of Jesus, source of all consolation, have mercy on us.\nHeart of Jesus, our life and resurrection, have mercy on us.\nHeart of Jesus, our peace and reconciliation, have mercy on us.\nHeart of Jesus, victim for our sins, have mercy on us.\nHeart of Jesus, salvation of all who trust in you, have mercy on us.\nHeart of Jesus, hope of all who die in you, have mercy on us.\nHeart of Jesus, delight of all the saints, have mercy on us.\n\nLamb of God, you take away the sins of the world, spare us, O Lord.\nLamb of God, you take away the sins of the world, hear us, O Lord.\nLamb of God, you take away the sins of the world, have mercy on us.\n\nV. Jesus, meek and humble of heart.\nR. Make our hearts like yours.\n\nLet us pray:\nFather, we rejoice in the gifts of love we have received from the heart of Jesus your Son. Open our hearts to share his life and continue to bless us with his love. We ask this in the name of Jesus the Lord. Amen.',
+      latinBody: 'Kyrie, eleison. Kyrie, eleison.\nChriste, eleison. Christe, eleison.\nKyrie, eleison. Kyrie, eleison.\n\nPater de caelis, Deus, miserere nobis.\nFili, Redemptor mundi, Deus, miserere nobis.\nSpiritus Sancte, Deus, miserere nobis.\nSancta Trinitas, unus Deus, miserere nobis.\n\nCor Iesu, Filii Patris aeterni, miserere nobis.\nCor Iesu, in sinu Virginis Matris a Spiritu Sancto formatum, miserere nobis.\nCor Iesu, Verbo Dei substantialiter unitum, miserere nobis.\nCor Iesu, maiestatis infinitae, miserere nobis.\nCor Iesu, templum sanctum Dei, miserere nobis.\nCor Iesu, tabernaculum Altissimi, miserere nobis.\nCor Iesu, domus Dei et porta caeli, miserere nobis.\nCor Iesu, flagrans caritate in nos, miserere nobis.\nCor Iesu, iustitiae et amoris receptaculum, miserere nobis.\nCor Iesu, bonitate et amore plenum, miserere nobis.\nCor Iesu, virtutum omnium abyssus, miserere nobis.\nCor Iesu, omni laude dignissimum, miserere nobis.\nCor Iesu, rex et centrum omnium cordium, miserere nobis.\nCor Iesu, in quo sunt omnes thesauri sapientiae et scientiae, miserere nobis.\nCor Iesu, in quo habitat omnis plenitudo divinitatis, miserere nobis.\nCor Iesu, in quo Pater sibi bene complacuit, miserere nobis.\nCor Iesu, de cuius plenitudine omnes nos accepimus, miserere nobis.\nCor Iesu, desiderium collium aeternorum, miserere nobis.\nCor Iesu, patiens et multae misericordiae, miserere nobis.\nCor Iesu, dives in omnes qui invocant te, miserere nobis.\nCor Iesu, fons vitae et sanctitatis, miserere nobis.\nCor Iesu, propitiatio pro peccatis nostris, miserere nobis.\nCor Iesu, saturatum opprobriis, miserere nobis.\nCor Iesu, contritum propter scelera nostra, miserere nobis.\nCor Iesu, usque ad mortem oboediens factum, miserere nobis.\nCor Iesu, lancea perforatum, miserere nobis.\nCor Iesu, fons totius consolationis, miserere nobis.\nCor Iesu, vita et resurrectio nostra, miserere nobis.\nCor Iesu, pax et reconciliatio nostra, miserere nobis.\nCor Iesu, hostia peccatorum, miserere nobis.\nCor Iesu, salus in te sperantium, miserere nobis.\nCor Iesu, spes in te morientium, miserere nobis.\nCor Iesu, delectamentum Sanctorum omnium, miserere nobis.\n\nAgnus Dei, qui tollis peccata mundi, parce nobis, Domine.\nAgnus Dei, qui tollis peccata mundi, exaudi nos, Domine.\nAgnus Dei, qui tollis peccata mundi, miserere nobis.\n\nV. Iesu, mitis et humilis corde.\nR. Fac cor nostrum secundum cor tuum.\n\nOremus:\nOmnipotens sempiterne Deus, respice in cor dilectissimi Filii tui et in laudes et satisfactiones quas in nomine peccatorum tibi persolvit; eisque misericordiam tuam petentibus, tui Cordis Iesu meritis, veniam largire placatus. Per eundem Christum Dominum nostrum. Amen.',
+    },
+    {
       title: 'Litany of Trust',
       body: 'From the belief that I have to earn Your love, deliver me, Jesus.\nFrom the fear that I am unlovable, deliver me, Jesus.\nFrom the false security that I have what it takes, deliver me, Jesus.\nFrom the fear that trusting You will leave me more destitute, deliver me, Jesus.\nFrom all suspicion of Your words and promises, deliver me, Jesus.\nFrom the rebellion against childlike dependency on You, deliver me, Jesus.\nFrom refusals and reluctances in accepting Your will, deliver me, Jesus.\nFrom anxiety about the future, deliver me, Jesus.\nFrom resentment or excessive preoccupation with the past, deliver me, Jesus.\nFrom restless self-seeking in the present moment, deliver me, Jesus.\nFrom disbelief in Your love and presence, deliver me, Jesus.\nFrom the fear of being asked to give more than I have, deliver me, Jesus.\nFrom the belief that my life has no meaning or worth, deliver me, Jesus.\nFrom the fear of what love demands, deliver me, Jesus.\nFrom discouragement, deliver me, Jesus.\n\nThat You are continually holding me, sustaining me, loving me, Jesus, I trust in You.\nThat Your love goes deeper than my sins and failings and transforms me, Jesus, I trust in You.\nThat not knowing what tomorrow brings is an invitation to lean on You, Jesus, I trust in You.\nThat You are with me in my suffering, Jesus, I trust in You.\nThat my suffering, united to Your own, will bear fruit in this life and the next, Jesus, I trust in You.\nThat You will not leave me orphan, that You are present in Your Church, Jesus, I trust in You.\nThat Your plan is better than anything else, Jesus, I trust in You.\nThat You always hear me and in Your goodness always respond to me, Jesus, I trust in You.\nThat You give me the grace to accept forgiveness and to forgive others, Jesus, I trust in You.\nThat You give me all the strength I need for what is asked, Jesus, I trust in You.\nThat my life is a gift, Jesus, I trust in You.\nThat You will teach me to trust You, Jesus, I trust in You.\nThat You are my Lord and my God, Jesus, I trust in You.\nThat I am Your beloved one, Jesus, I trust in You.',
     },
@@ -196,19 +244,26 @@ const App: FC = () => {
   const [showLatin, setShowLatin] = useState(false);
   const [search, setSearch] = useState('');
   const [mode, setMode] = useState<AppMode>('prayers');
-  const [dimMode, setDimMode] = useState(false);
-  const [fontScale, setFontScale] = useState(() => {
-    return parseFloat(localStorage.getItem('fontScale') || '1');
-  });
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const [dismissedAngelusHours, setDismissedAngelusHours] = useState<Set<number>>(new Set());
+  const [currentHour, setCurrentHour] = useState(() => new Date().getHours());
+  const [currentMinute, setCurrentMinute] = useState(() => new Date().getMinutes());
   const verseRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.documentElement.style.setProperty('--font-scale', String(fontScale));
-    localStorage.setItem('fontScale', String(fontScale));
-  }, [fontScale]);
+    document.documentElement.classList.toggle('dark-mode', darkMode);
+    localStorage.setItem('darkMode', String(darkMode));
+  }, [darkMode]);
 
-  const growFont = () => setFontScale((s) => Math.min(parseFloat((s + 0.15).toFixed(2)), 2));
-  const shrinkFont = () => setFontScale((s) => Math.max(parseFloat((s - 0.15).toFixed(2)), 0.7));
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date();
+      setCurrentHour(now.getHours());
+      setCurrentMinute(now.getMinutes());
+    };
+    const id = setInterval(tick, 30000);
+    return () => clearInterval(id);
+  }, []);
 
   const filteredPrayers = prayers.filter((prayer) =>
     prayer.title.toLowerCase().includes(search.toLowerCase())
@@ -270,14 +325,16 @@ const App: FC = () => {
     };
   }, [mode, handleNext, handlePrev]);
 
+  const isLentOrHolyWeek = liturgical.season === 'Lent' || liturgical.season === 'Holy Week';
+  const isEaster = liturgical.season === 'Easter' || liturgical.season === 'Ascension';
+  const isAngelusHour = (currentHour === 6 || currentHour === 12 || currentHour === 18) && currentMinute < 15;
+  const showAngelusBanner = isAngelusHour && !dismissedAngelusHours.has(currentHour);
+  const angelusPrayerName = isEaster ? 'Regina Caeli' : 'Angelus';
+  const dismissAngelus = () => setDismissedAngelusHours((prev) => new Set(prev).add(currentHour));
+
   return (
     <div className="parent">
-      {dimMode && (
-        <div className="dim-overlay" onClick={() => setDimMode(false)}>
-          <span className="dim-hint">tap to dismiss</span>
-        </div>
-      )}
-      {isMenuOpen && <div className="menu-overlay" onClick={() => setIsMenuOpen(false)} />}
+{isMenuOpen && <div className="menu-overlay" onClick={() => setIsMenuOpen(false)} />}
 
       <div className="container">
         <div
@@ -298,15 +355,19 @@ const App: FC = () => {
           )}
           <h4>{{ prayers: 'Prayers', rosary: 'The Rosary', stations: 'Stations', chaplet: 'Divine Mercy' }[mode]}</h4>
           <div className="font-controls">
-            <button className="font-btn" onClick={shrinkFont} title="Decrease font size">A−</button>
-            <button className="font-btn" onClick={growFont} title="Increase font size">A+</button>
-            <button className="dim-btn" onClick={() => setDimMode(true)} title="Dim screen for night prayer">☽</button>
+            <button className="dark-btn" onClick={() => setDarkMode((d) => !d)} title="Toggle dark mode">{darkMode ? '☀' : '☽'}</button>
           </div>
         </div>
+        {showAngelusBanner && (
+          <div className="angelus-banner">
+            <span>Time for the {angelusPrayerName}</span>
+            <button className="angelus-dismiss" onClick={dismissAngelus}>✕</button>
+          </div>
+        )}
         <div className="mode-toggle">
           <button className={`mode-btn${mode === 'prayers' ? ' active' : ''}`} onClick={() => setMode('prayers')}>Prayers</button>
           <button className={`mode-btn${mode === 'rosary' ? ' active' : ''}`} onClick={() => setMode('rosary')}>Rosary</button>
-          <button className={`mode-btn${mode === 'stations' ? ' active' : ''}`} onClick={() => setMode('stations')}>Stations</button>
+          <button className={`mode-btn${mode === 'stations' ? ' active' : ''}${!isLentOrHolyWeek && mode !== 'stations' ? ' mode-btn-dim' : ''}`} onClick={() => setMode('stations')}>Stations</button>
           <button className={`mode-btn${mode === 'chaplet' ? ' active' : ''}`} onClick={() => setMode('chaplet')}>Chaplet</button>
         </div>
 

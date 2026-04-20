@@ -471,40 +471,75 @@ button:focus {
   white-space: normal;
 }
 
-/* ── Dim mode ────────────────────────────────────────────────────── */
-.dim-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.82);
-  z-index: 9000;
-  cursor: pointer;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 30px;
-}
-
-.dim-hint {
-  color: rgba(255, 255, 255, 0.2);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  pointer-events: none;
-}
-
-.dim-btn {
+/* ── Dark mode toggle button ─────────────────────────────────────── */
+.dark-btn {
   margin: 0;
   padding: 4px 10px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
 }
 
-.dim-btn:hover {
+.dark-btn:hover {
   background: rgba(255, 255, 255, 0.15);
   color: white;
+}
+
+/* ── Dark mode ───────────────────────────────────────────────────── */
+html.dark-mode body {
+  background: #0d0d0d;
+  background-image: none;
+}
+
+html.dark-mode .container {
+  background-color: rgba(8, 8, 8, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ── Angelus banner ──────────────────────────────────────────────── */
+.angelus-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  border-radius: 6px;
+  padding: 7px 12px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.03em;
+}
+
+.angelus-dismiss {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.angelus-dismiss:hover {
+  color: rgba(255, 255, 255, 0.8);
+  background: none;
+}
+
+/* ── Stations de-emphasis outside Lent/Holy Week ─────────────────── */
+.mode-btn.mode-btn-dim {
+  opacity: 0.4;
+}
+
+.mode-btn.mode-btn-dim:hover {
+  opacity: 0.75;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* ── Stations of the Cross pip track ────────────────────────────── */
