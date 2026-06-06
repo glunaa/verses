@@ -8,7 +8,7 @@ Verses is a beautiful React app designed to guide your prayer life. It features 
 
 📿 Guided Devotions — Step-by-step guides for the Rosary, the Stations of the Cross, the Divine Mercy Chaplet, and the Chaplet of the Seven Sorrows of Mary, complete with bead/step trackers
 
-🔍 Search & Browse — Quickly find any prayer from the menu, or jump to a random one
+🔍 Search & Browse — Quickly find any prayer from the menu
 
 🌗 Dark Mode — Toggle a true-black dark theme for night prayer
 

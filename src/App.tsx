@@ -348,15 +348,6 @@ const App: FC = () => {
     );
   }, [prayers.length]);
 
-  const handleRandom = useCallback(() => {
-    setCurrentPrayerIndex((prevIndex) => {
-      if (prayers.length <= 1) return prevIndex;
-      let randomIndex = Math.floor(Math.random() * prayers.length);
-      while (randomIndex === prevIndex) randomIndex = Math.floor(Math.random() * prayers.length);
-      return randomIndex;
-    });
-  }, [prayers.length]);
-
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   const shrinkFont = () => setFontScale((s) => Math.max(FONT_SCALE_MIN, Math.round((s - FONT_SCALE_STEP) * 100) / 100));
@@ -566,7 +557,6 @@ const App: FC = () => {
                 <div className="buttons">
                   <button onClick={handlePrev}>&#8592; Previous</button>
                   <button onClick={handleNext}>Next &#8594;</button>
-                  <button onClick={handleRandom} title="Jump to a random prayer">Random ⤮</button>
                   <button onClick={sharePrayer} title="Share this prayer">{shareStatus === 'copied' ? 'Copied ✓' : 'Share ⤴'}</button>
                   {prayers[currentPrayerIndex].latinBody && (
                     <button onClick={() => setShowLatin(!showLatin)}>
