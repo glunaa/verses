@@ -4,7 +4,6 @@ import { verseProps } from './components/Verse';
 import Rosary from './components/Rosary';
 import Stations from './components/Stations';
 import Chaplet from './components/Chaplet';
-import SevenSorrows from './components/SevenSorrows';
 import Intentions from './components/Intentions';
 import GuidedReader from './components/GuidedReader';
 import { getLiturgicalInfo } from './utils/liturgicalSeason';
@@ -14,7 +13,7 @@ import './App.css';
 const liturgical = getLiturgicalInfo();
 const feastOfDay = getFeastOfDay();
 
-type AppMode = 'prayers' | 'rosary' | 'stations' | 'chaplet' | 'sorrows' | 'intentions';
+type AppMode = 'prayers' | 'rosary' | 'stations' | 'chaplet' | 'intentions';
 
 const FONT_SCALE_MIN = 0.85;
 const FONT_SCALE_MAX = 1.35;
@@ -304,6 +303,7 @@ const App: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLatin, setShowLatin] = useState(false);
   const [search, setSearch] = useState('');
+  const [devotionalsOpen, setDevotionalsOpen] = useState(false);
   const [mode, setMode] = useState<AppMode>('prayers');
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [dismissedAngelusHours, setDismissedAngelusHours] = useState<Set<number>>(new Set());
@@ -357,6 +357,12 @@ const App: FC = () => {
     prayer.title.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Litanies and the novena are devotional prayer-forms: group them under a
+  // collapsible "Devotionals" entry so the main list isn't overwhelming.
+  const isDevotional = (prayer: verseProps) => /litany|novena/i.test(prayer.title);
+  const devotionalPrayers = prayers.filter(isDevotional);
+  const standardPrayers = prayers.filter((prayer) => !isDevotional(prayer));
+
   const handlePrev = useCallback(() => {
     setCurrentPrayerIndex((prevIndex) =>
       prevIndex === 0 ? prayers.length - 1 : prevIndex - 1
@@ -384,6 +390,24 @@ const App: FC = () => {
       return next;
     });
   };
+
+  const renderMenuItem = (prayer: verseProps, extraClassName?: string) => (
+    <li
+      key={prayer.title}
+      className={extraClassName}
+      role="button"
+      tabIndex={0}
+      onClick={() => selectPrayer(prayer)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectPrayer(prayer); }
+      }}
+    >
+      {favorites.has(prayer.title) && <span className="menu-star" aria-hidden="true">★ </span>}
+      {prayer.title}
+    </li>
+  );
+
+  const toggleDevotionals = () => setDevotionalsOpen((prev) => !prev);
 
   const shrinkFont = () => setFontScale((s) => Math.max(FONT_SCALE_MIN, Math.round((s - FONT_SCALE_STEP) * 100) / 100));
   const growFont = () => setFontScale((s) => Math.min(FONT_SCALE_MAX, Math.round((s + FONT_SCALE_STEP) * 100) / 100));
@@ -524,7 +548,7 @@ const App: FC = () => {
               <div className="line"></div>
             </div>
           )}
-          <h4>{{ prayers: 'Prayers', rosary: 'The Rosary', stations: 'Stations', chaplet: 'Divine Mercy', sorrows: 'Seven Sorrows', intentions: 'Intentions' }[mode]}</h4>
+          <h4>{{ prayers: 'Prayers', rosary: 'The Rosary', stations: 'Stations', chaplet: 'Chaplets', intentions: 'Intentions' }[mode]}</h4>
           <div className="font-controls">
             <button className="nav-icon-btn" onClick={shrinkFont} disabled={fontScale <= FONT_SCALE_MIN} title="Smaller text" aria-label="Decrease text size">A−</button>
             <button className="nav-icon-btn" onClick={growFont} disabled={fontScale >= FONT_SCALE_MAX} title="Larger text" aria-label="Increase text size">A+</button>
@@ -561,7 +585,6 @@ const App: FC = () => {
           <button className={`mode-btn${mode === 'rosary' ? ' active' : ''}`} onClick={() => setMode('rosary')}>Rosary</button>
           <button className={`mode-btn${mode === 'stations' ? ' active' : ''}${!isLentOrHolyWeek && mode !== 'stations' ? ' mode-btn-dim' : ''}`} onClick={() => setMode('stations')}>Stations</button>
           <button className={`mode-btn${mode === 'chaplet' ? ' active' : ''}`} onClick={() => setMode('chaplet')}>Chaplet</button>
-          <button className={`mode-btn${mode === 'sorrows' ? ' active' : ''}`} onClick={() => setMode('sorrows')}>Sorrows</button>
         </div>
 
         {mode === 'prayers' && (
@@ -590,20 +613,26 @@ const App: FC = () => {
                       className="search-input"
                     />
                     <ul>
-                      {filteredPrayers.map((prayer, index) => (
-                        <li
-                          key={index}
-                          role="button"
-                          tabIndex={0}
-                          onClick={() => selectPrayer(prayer)}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectPrayer(prayer); }
-                          }}
-                        >
-                          {favorites.has(prayer.title) && <span className="menu-star" aria-hidden="true">★ </span>}
-                          {prayer.title}
-                        </li>
-                      ))}
+                      {search.trim() ? (
+                        filteredPrayers.map((prayer) => renderMenuItem(prayer))
+                      ) : (
+                        <>
+                          {standardPrayers.map((prayer) => renderMenuItem(prayer))}
+                          <li
+                            className="menu-category"
+                            role="button"
+                            tabIndex={0}
+                            aria-expanded={devotionalsOpen}
+                            onClick={toggleDevotionals}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDevotionals(); }
+                            }}
+                          >
+                            <span aria-hidden="true">{devotionalsOpen ? '▾' : '▸'}</span> Devotionals
+                          </li>
+                          {devotionalsOpen && devotionalPrayers.map((prayer) => renderMenuItem(prayer, 'menu-subitem'))}
+                        </>
+                      )}
                     </ul>
                   </div>
                 )}
@@ -681,14 +710,6 @@ const App: FC = () => {
           <Chaplet
             showLatin={showLatin}
             onToggleLatin={() => setShowLatin((prev) => !prev)}
-          />
-        )}
-
-        {mode === 'sorrows' && (
-          <SevenSorrows
-            showLatin={showLatin}
-            onToggleLatin={() => setShowLatin((prev) => !prev)}
-            onBack={() => setMode('prayers')}
           />
         )}
 

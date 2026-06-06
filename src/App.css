@@ -94,6 +94,20 @@ body {
   color: #c9a84c;
 }
 
+.menu-category {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.menu-category span {
+  display: inline-block;
+  width: 1em;
+}
+
+.menu-subitem {
+  padding-left: 28px;
+}
+
 .container {
   position: relative;      /* anchor the prayer-menu dropdown */
   text-align: center;
