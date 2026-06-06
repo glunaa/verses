@@ -415,14 +415,14 @@ button:focus {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   flex-shrink: 0;
 }
 
 .bead.past {
-  background: rgba(0, 123, 255, 0.45);
-  border-color: #007bff;
+  background: rgba(33, 150, 255, 0.75);
+  border-color: #4dabff;
 }
 
 .bead.current {
@@ -544,13 +544,13 @@ html.dark-mode .container {
   width: 14px;
   height: 14px;
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.45);
 }
 
 .station-pip.past {
-  background: rgba(0, 123, 255, 0.45);
-  border-color: #007bff;
+  background: rgba(33, 150, 255, 0.75);
+  border-color: #4dabff;
 }
 
 .station-pip.current {
