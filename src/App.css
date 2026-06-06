@@ -15,6 +15,7 @@ body {
   padding: 0;
   overflow-x: hidden;
   position: relative;
+  transition: background-color 0.3s ease;
 }
 
 .parent {
@@ -51,6 +52,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: opacity 0.15s ease;
+}
+
+.hamburger:hover {
+  opacity: 0.75;
 }
 
 .line {
@@ -73,6 +79,24 @@ body {
   max-height: 55vh;
   overflow-y: auto;
   min-width: 220px;
+  animation: menu-fade-in 0.15s ease;
+}
+
+@keyframes menu-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prayer-menu {
+    animation: none;
+  }
 }
 
 .prayer-menu ul {
@@ -84,6 +108,7 @@ body {
 .prayer-menu li {
   padding: 10px;
   cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
 .prayer-menu li:hover {
@@ -108,6 +133,14 @@ body {
   padding-left: 28px;
 }
 
+.menu-empty {
+  padding: 16px 10px;
+  margin: 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.55);
+  font-style: italic;
+}
+
 .container {
   position: relative;      /* anchor the prayer-menu dropdown */
   text-align: center;
@@ -120,6 +153,7 @@ body {
   border-radius: 8px;
   color: white;
   margin: 0 auto;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .verse {
@@ -132,6 +166,27 @@ body {
   color: white;
   position: relative;
   z-index: 9001; /* floats above the menu overlay */
+}
+
+@keyframes verse-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.verse-content {
+  animation: verse-fade-in 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .verse-content {
+    animation: none;
+  }
 }
 
 .verse h2 {
@@ -161,10 +216,16 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+    transform 0.08s ease, opacity 0.15s ease;
 }
 
 button:hover {
   background: #0056b3;
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 button:focus {
@@ -320,7 +381,6 @@ button:focus-visible,
   border-radius: 8px;
   color: white;
   cursor: pointer;
-  transition: background 0.15s;
   margin: 0;
 }
 

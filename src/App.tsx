@@ -612,6 +612,9 @@ const App: FC = () => {
                       onChange={(e) => setSearch(e.target.value)}
                       className="search-input"
                     />
+                    {search.trim() && filteredPrayers.length === 0 && (
+                      <p className="menu-empty">No prayers match "{search.trim()}"</p>
+                    )}
                     <ul>
                       {search.trim() ? (
                         filteredPrayers.map((prayer) => renderMenuItem(prayer))
@@ -638,13 +641,15 @@ const App: FC = () => {
                 )}
 
                 <div ref={verseRef} className="verse">
-                  <Verse
-                    title={prayers[currentPrayerIndex].title}
-                    latinTitle={prayers[currentPrayerIndex].latinTitle}
-                    body={prayers[currentPrayerIndex].body}
-                    latinBody={prayers[currentPrayerIndex].latinBody}
-                    showLatin={showLatin}
-                  />
+                  <div className="verse-content" key={currentPrayerIndex}>
+                    <Verse
+                      title={prayers[currentPrayerIndex].title}
+                      latinTitle={prayers[currentPrayerIndex].latinTitle}
+                      body={prayers[currentPrayerIndex].body}
+                      latinBody={prayers[currentPrayerIndex].latinBody}
+                      showLatin={showLatin}
+                    />
+                  </div>
                 </div>
 
                 <p className="prayer-counter">
