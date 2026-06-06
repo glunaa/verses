@@ -4,12 +4,13 @@ import { verseProps } from './components/Verse';
 import Rosary from './components/Rosary';
 import Stations from './components/Stations';
 import Chaplet from './components/Chaplet';
+import SevenSorrows from './components/SevenSorrows';
 import { getLiturgicalInfo } from './utils/liturgicalSeason';
 import './App.css';
 
 const liturgical = getLiturgicalInfo();
 
-type AppMode = 'prayers' | 'rosary' | 'stations' | 'chaplet';
+type AppMode = 'prayers' | 'rosary' | 'stations' | 'chaplet' | 'sorrows';
 
 const App: FC = () => {
   const prayers: verseProps[] = [
@@ -281,12 +282,15 @@ const App: FC = () => {
     );
   }, [prayers.length]);
 
-  /*  **Saved for potential future use**
   const handleRandom = useCallback(() => {
-    const randomIndex = Math.floor(Math.random() * prayers.length);
-    setCurrentPrayerIndex(randomIndex);
+    setCurrentPrayerIndex((prevIndex) => {
+      if (prayers.length <= 1) return prevIndex;
+      let randomIndex = Math.floor(Math.random() * prayers.length);
+      while (randomIndex === prevIndex) randomIndex = Math.floor(Math.random() * prayers.length);
+      return randomIndex;
+    });
   }, [prayers.length]);
-   */
+
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   // Persist last prayer & scroll to top when prayer changes
@@ -353,7 +357,7 @@ const App: FC = () => {
               <div className="line"></div>
             </div>
           )}
-          <h4>{{ prayers: 'Prayers', rosary: 'The Rosary', stations: 'Stations', chaplet: 'Divine Mercy' }[mode]}</h4>
+          <h4>{{ prayers: 'Prayers', rosary: 'The Rosary', stations: 'Stations', chaplet: 'Divine Mercy', sorrows: 'Seven Sorrows' }[mode]}</h4>
           <div className="font-controls">
             <button className="dark-btn" onClick={() => setDarkMode((d) => !d)} title="Toggle dark mode">{darkMode ? '☀' : '☽'}</button>
           </div>
@@ -369,6 +373,7 @@ const App: FC = () => {
           <button className={`mode-btn${mode === 'rosary' ? ' active' : ''}`} onClick={() => setMode('rosary')}>Rosary</button>
           <button className={`mode-btn${mode === 'stations' ? ' active' : ''}${!isLentOrHolyWeek && mode !== 'stations' ? ' mode-btn-dim' : ''}`} onClick={() => setMode('stations')}>Stations</button>
           <button className={`mode-btn${mode === 'chaplet' ? ' active' : ''}`} onClick={() => setMode('chaplet')}>Chaplet</button>
+          <button className={`mode-btn${mode === 'sorrows' ? ' active' : ''}`} onClick={() => setMode('sorrows')}>Sorrows</button>
         </div>
 
         {mode === 'prayers' && (
@@ -415,6 +420,7 @@ const App: FC = () => {
             <div className="buttons">
               <button onClick={handlePrev}>&#8592; Previous</button>
               <button onClick={handleNext}>Next &#8594;</button>
+              <button onClick={handleRandom} title="Jump to a random prayer">Random ⤮</button>
               {prayers[currentPrayerIndex].latinBody && (
                 <button onClick={() => setShowLatin(!showLatin)}>
                   {showLatin ? 'Show English' : 'Show Latin'}
@@ -442,6 +448,14 @@ const App: FC = () => {
           <Chaplet
             showLatin={showLatin}
             onToggleLatin={() => setShowLatin((prev) => !prev)}
+          />
+        )}
+
+        {mode === 'sorrows' && (
+          <SevenSorrows
+            showLatin={showLatin}
+            onToggleLatin={() => setShowLatin((prev) => !prev)}
+            onBack={() => setMode('prayers')}
           />
         )}
       </div>
