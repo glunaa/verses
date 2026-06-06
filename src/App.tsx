@@ -316,6 +316,7 @@ const App: FC = () => {
   const [favorites, setFavorites] = useState<Set<string>>(loadFavorites);
   const [guidedReaderOpen, setGuidedReaderOpen] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const verseRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -413,11 +414,32 @@ const App: FC = () => {
     }
   };
 
+  const speakPrayer = () => {
+    if (!('speechSynthesis' in window)) return;
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      return;
+    }
+    const prayer = prayers[currentPrayerIndex];
+    const titleText = showLatin && prayer.latinTitle ? prayer.latinTitle : prayer.title;
+    const bodyText = showLatin && prayer.latinBody ? prayer.latinBody : prayer.body;
+    const utterance = new SpeechSynthesisUtterance(`${titleText}. ${bodyText}`);
+    utterance.lang = showLatin && prayer.latinBody ? 'la' : 'en-US';
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+    setIsSpeaking(true);
+  };
+
   // Persist last prayer & scroll to top when prayer changes
   useEffect(() => {
     localStorage.setItem('lastPrayerIndex', String(currentPrayerIndex));
     if (verseRef.current) verseRef.current.scrollTop = 0;
     setGuidedReaderOpen(false);
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    setIsSpeaking(false);
   }, [currentPrayerIndex]);
 
   // Keyboard: arrow keys navigate, Escape closes menu
@@ -619,6 +641,17 @@ const App: FC = () => {
                     {isFavorite ? '★ Favorited' : '☆ Favorite'}
                   </button>
                   <button onClick={sharePrayer} title="Share this prayer">{shareStatus === 'copied' ? 'Copied ✓' : 'Share ⤴'}</button>
+                  {'speechSynthesis' in window && (
+                    <button
+                      className="listen-btn"
+                      onClick={speakPrayer}
+                      title={isSpeaking ? 'Stop reading aloud' : 'Read this prayer aloud'}
+                      aria-label={isSpeaking ? 'Stop reading aloud' : 'Read this prayer aloud'}
+                      aria-pressed={isSpeaking}
+                    >
+                      {isSpeaking ? '⏸ Stop' : '🔊 Listen'}
+                    </button>
+                  )}
                   {prayers[currentPrayerIndex].latinBody && (
                     <button onClick={() => setShowLatin(!showLatin)}>
                       {showLatin ? 'Show English' : 'Show Latin'}

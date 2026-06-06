@@ -498,6 +498,14 @@ button:focus-visible,
   background: rgba(201, 168, 76, 0.5);
 }
 
+.listen-btn[aria-pressed="true"] {
+  background: rgba(120, 170, 220, 0.35);
+}
+
+.listen-btn[aria-pressed="true"]:hover {
+  background: rgba(120, 170, 220, 0.5);
+}
+
 .guided-reader-body {
   display: flex;
   flex-direction: column;
