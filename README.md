@@ -128,7 +128,7 @@ CSS
 
 Browse prayers and toggle between English 🇺🇸 and Latin 🇻🇦, or search for a prayer by name
 
-Switch into Rosary, Stations, Chaplet, or Sorrows mode for a guided, step-by-step devotion with progress and bead tracking — or tap through a litany line by line with "Pray Step-by-Step ▸"
+Switch into Rosary, Stations, or Chaplet mode for a guided, step-by-step devotion with progress and bead tracking — choosing between the Divine Mercy Chaplet and the Chaplet of the Seven Sorrows of Mary — or tap through a litany line by line with "Pray Step-by-Step ▸"
 
 Use the navbar icons to shrink/grow text (A− / A+), open your Prayer Intentions 🙏, set your own Angelus reminder times 🔔, or toggle dark mode 🌗
 
