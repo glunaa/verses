@@ -12,9 +12,21 @@ Verses is a beautiful React app designed to guide your prayer life. It features 
 
 🌗 Dark Mode — Toggle a true-black dark theme for night prayer
 
-⏰ Angelus Reminder — A gentle banner at 6 AM, noon, and 6 PM prompting the Angelus (or the Regina Caeli during Eastertide)
+⏰ Angelus Reminder — A gentle banner prompting the Angelus (or the Regina Caeli during Eastertide), at times of day you choose yourself
 
 🗓️ Liturgical Season Banner — Displays the current liturgical season (with Latin name and seasonal color), and quietly de-emphasizes the Stations of the Cross outside of Lent and Holy Week
+
+✛ "On This Day" — A small banner naming the saint or feast the Church celebrates today, in English or Latin
+
+🙏 Prayer Intentions — Jot down people and needs to hold in prayer, mark them as answered, and keep a running journal — all stored privately on your device
+
+🔥 Prayer Streak — A quiet flame badge counts the consecutive days you've opened the app to pray
+
+🔤 Adjustable Text Size — Shrink or grow prayer text to whatever's comfortable for your eyes
+
+📤 Share a Prayer — Send any prayer to a friend via your device's share sheet, or copy it to the clipboard
+
+📲 Installable & Offline — Add Verses to your home screen and keep praying even without a connection, thanks to a service worker and app manifest
 
 📱 Responsive UI — Works beautifully on desktop, tablet, and mobile, with swipe gestures on touch devices
 
@@ -31,6 +43,8 @@ The Stations of the Cross (Via Crucis) — all fourteen stations
 The Divine Mercy Chaplet (Coronilla Misericordiae Divinae)
 
 The Chaplet of the Seven Sorrows of Mary (Septem Dolorum BMV)
+
+Litanies (Loreto, the Sacred Heart, and more) can also be prayed step-by-step with "Pray Step-by-Step ▸" — a guided tap-through reader that keeps English and Latin in sync line by line
 
 ## 🙏 Prayers Included
 
@@ -116,9 +130,13 @@ CSS
 
 Browse prayers and toggle between English 🇺🇸 and Latin 🇻🇦, or search for a prayer by name
 
-Switch into Rosary, Stations, Chaplet, or Sorrows mode for a guided, step-by-step devotion with progress and bead tracking
+Switch into Rosary, Stations, Chaplet, or Sorrows mode for a guided, step-by-step devotion with progress and bead tracking — or tap through a litany line by line with "Pray Step-by-Step ▸"
 
-Toggle dark mode 🌗 or let the Angelus banner ⏰ remind you to pause and pray
+Use the navbar icons to shrink/grow text (A− / A+), open your Prayer Intentions 🙏, set your own Angelus reminder times 🔔, or toggle dark mode 🌗
+
+Share any prayer with a friend ⤴, or let the Angelus banner remind you to pause and pray
+
+Install Verses to your home screen and pray offline — no connection required
 
 Use during prayer, personal devotion, or study 📿
 

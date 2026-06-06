@@ -1,5 +1,6 @@
 :root {
   color-scheme: dark;
+  --font-scale: 1;
 }
 
 body {
@@ -124,7 +125,7 @@ body {
 
 .verse p {
   white-space: pre-wrap;
-  font-size: 1rem;
+  font-size: calc(1rem * var(--font-scale));
 }
 
 .font-controls {
@@ -167,6 +168,30 @@ button:focus {
   align-items: center;
   justify-content: center;
   gap: 6px;
+}
+
+.streak-badge {
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 700;
+}
+
+/* ── "On this day" feast banner ──────────────────────────────────── */
+.feast-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+  margin: -2px 0 10px;
+}
+
+.feast-banner-icon {
+  color: #c9a84c;
 }
 
 /* ── Menu overlay (closes menu on outside click) ─────────────────── */
@@ -436,6 +461,36 @@ button:focus {
   text-align: left;
 }
 
+/* ── Guided reader (litany "tap-through" mode) ───────────────────── */
+.guided-trigger-btn {
+  display: block;
+  width: 100%;
+  margin: 6px 0 0;
+  padding: 9px;
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+}
+
+.guided-trigger-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.guided-reader-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 32vh;
+  text-align: center;
+}
+
+.guided-reader-body p {
+  margin: 8px 0;
+}
+
 .station-prayer-note {
   margin-top: 18px;
   padding-top: 10px;
@@ -456,10 +511,10 @@ button:focus {
   white-space: normal;
 }
 
-/* ── Dark mode toggle button ─────────────────────────────────────── */
-.dark-btn {
+/* ── Navbar icon buttons (font size, intentions, dark mode) ──────── */
+.nav-icon-btn {
   margin: 0;
-  padding: 4px 10px;
+  padding: 4px 9px;
   font-size: 0.85rem;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -468,9 +523,14 @@ button:focus {
   cursor: pointer;
 }
 
-.dark-btn:hover {
+.nav-icon-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.15);
   color: white;
+}
+
+.nav-icon-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 /* ── Dark mode ───────────────────────────────────────────────────── */
@@ -517,6 +577,42 @@ html.dark-mode .container {
   background: none;
 }
 
+.angelus-settings {
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.angelus-settings-label {
+  margin: 0 0 8px;
+  font-size: 0.74rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.angelus-settings-row {
+  display: flex;
+  gap: 8px;
+}
+
+.angelus-hour-select {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 5px;
+  color: white;
+  font-size: 0.76rem;
+}
+
+.angelus-hour-select option {
+  background: #1a1a1a;
+  color: white;
+}
+
 /* ── Stations de-emphasis outside Lent/Holy Week ─────────────────── */
 .mode-btn.mode-btn-dim {
   opacity: 0.4;
@@ -559,6 +655,126 @@ html.dark-mode .container {
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
 }
 
+/* ── Prayer intentions / journal ─────────────────────────────────── */
+.intentions {
+  text-align: left;
+}
+
+.intentions-intro {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 14px;
+}
+
+.intentions-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.intentions-form .search-input {
+  margin-bottom: 0;
+}
+
+.intentions-form button {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.intentions-empty {
+  font-size: 0.85rem;
+  font-style: italic;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 24px 0;
+}
+
+.intentions-subheading {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 18px 0 8px;
+}
+
+.intentions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 48vh;
+  overflow-y: auto;
+}
+
+.intentions-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.intentions-answered li {
+  opacity: 0.55;
+}
+
+.intention-check {
+  margin: 0;
+  padding: 0;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.intention-check.answered {
+  background: rgba(33, 150, 255, 0.5);
+  border-color: #4dabff;
+  color: white;
+}
+
+.intention-text {
+  flex: 1;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  text-align: left;
+  word-break: break-word;
+}
+
+.intention-remove {
+  margin: 0;
+  padding: 0;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.intention-remove:hover {
+  background: none;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 /* ── Responsive ──────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .container {
@@ -585,7 +801,7 @@ html.dark-mode .container {
     font-size: 1.05rem;
   }
   .verse p {
-    font-size: 0.875rem;
+    font-size: calc(0.875rem * var(--font-scale));
   }
   .mode-btn {
     font-size: 0.72rem;

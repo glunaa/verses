@@ -5,12 +5,63 @@ import Rosary from './components/Rosary';
 import Stations from './components/Stations';
 import Chaplet from './components/Chaplet';
 import SevenSorrows from './components/SevenSorrows';
+import Intentions from './components/Intentions';
+import GuidedReader from './components/GuidedReader';
 import { getLiturgicalInfo } from './utils/liturgicalSeason';
+import { getFeastOfDay } from './data/feastDays';
 import './App.css';
 
 const liturgical = getLiturgicalInfo();
+const feastOfDay = getFeastOfDay();
 
-type AppMode = 'prayers' | 'rosary' | 'stations' | 'chaplet' | 'sorrows';
+type AppMode = 'prayers' | 'rosary' | 'stations' | 'chaplet' | 'sorrows' | 'intentions';
+
+const FONT_SCALE_MIN = 0.85;
+const FONT_SCALE_MAX = 1.35;
+const FONT_SCALE_STEP = 0.1;
+
+function loadFontScale(): number {
+  const saved = parseFloat(localStorage.getItem('fontScale') ?? '');
+  return Number.isNaN(saved) ? 1 : Math.min(FONT_SCALE_MAX, Math.max(FONT_SCALE_MIN, saved));
+}
+
+const DEFAULT_ANGELUS_HOURS: [number, number, number] = [6, 12, 18];
+const HOUR_OPTIONS = Array.from({ length: 24 }, (_, i) => i);
+
+function loadAngelusHours(): [number, number, number] {
+  try {
+    const parsed = JSON.parse(localStorage.getItem('angelusHours') ?? 'null');
+    if (Array.isArray(parsed) && parsed.length === 3 && parsed.every((h) => Number.isInteger(h) && h >= 0 && h <= 23)) {
+      return parsed as [number, number, number];
+    }
+  } catch { /* fall through to defaults */ }
+  return DEFAULT_ANGELUS_HOURS;
+}
+
+function formatHour(hour: number): string {
+  const period = hour < 12 ? 'AM' : 'PM';
+  const display = hour % 12 === 0 ? 12 : hour % 12;
+  return `${display}:00 ${period}`;
+}
+
+function dateKey(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+/** Bumps (or resets) the consecutive-day prayer streak based on the last visit date. */
+function bumpStreak(): number {
+  try {
+    const saved = JSON.parse(localStorage.getItem('prayerStreak') ?? 'null') as { count: number; lastDate: string } | null;
+    const today = dateKey(new Date());
+    if (saved?.lastDate === today) return saved.count;
+    const yesterday = dateKey(new Date(Date.now() - 86400000));
+    const count = saved?.lastDate === yesterday ? saved.count + 1 : 1;
+    localStorage.setItem('prayerStreak', JSON.stringify({ count, lastDate: today }));
+    return count;
+  } catch {
+    return 1;
+  }
+}
 
 const App: FC = () => {
   const prayers: verseProps[] = [
@@ -249,12 +300,27 @@ const App: FC = () => {
   const [dismissedAngelusHours, setDismissedAngelusHours] = useState<Set<number>>(new Set());
   const [currentHour, setCurrentHour] = useState(() => new Date().getHours());
   const [currentMinute, setCurrentMinute] = useState(() => new Date().getMinutes());
+  const [fontScale, setFontScale] = useState(loadFontScale);
+  const [angelusHours, setAngelusHours] = useState<[number, number, number]>(loadAngelusHours);
+  const [showAngelusSettings, setShowAngelusSettings] = useState(false);
+  const [streak] = useState(bumpStreak);
+  const [guidedReaderOpen, setGuidedReaderOpen] = useState(false);
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
   const verseRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark-mode', darkMode);
     localStorage.setItem('darkMode', String(darkMode));
   }, [darkMode]);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--font-scale', String(fontScale));
+    localStorage.setItem('fontScale', String(fontScale));
+  }, [fontScale]);
+
+  useEffect(() => {
+    localStorage.setItem('angelusHours', JSON.stringify(angelusHours));
+  }, [angelusHours]);
 
   useEffect(() => {
     const tick = () => {
@@ -293,10 +359,40 @@ const App: FC = () => {
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
+  const shrinkFont = () => setFontScale((s) => Math.max(FONT_SCALE_MIN, Math.round((s - FONT_SCALE_STEP) * 100) / 100));
+  const growFont = () => setFontScale((s) => Math.min(FONT_SCALE_MAX, Math.round((s + FONT_SCALE_STEP) * 100) / 100));
+
+  const setAngelusHour = (slot: number, hour: number) => {
+    setAngelusHours((prev) => {
+      const next = [...prev] as [number, number, number];
+      next[slot] = hour;
+      return next;
+    });
+  };
+
+  const sharePrayer = async () => {
+    const prayer = prayers[currentPrayerIndex];
+    const titleText = showLatin && prayer.latinTitle ? prayer.latinTitle : prayer.title;
+    const bodyText = showLatin && prayer.latinBody ? prayer.latinBody : prayer.body;
+    const shareText = `${titleText}\n\n${bodyText}`;
+    if (navigator.share) {
+      try { await navigator.share({ title: titleText, text: shareText }); } catch { /* user dismissed the share sheet */ }
+      return;
+    }
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(shareText);
+        setShareStatus('copied');
+        setTimeout(() => setShareStatus('idle'), 2000);
+      } catch { /* clipboard write was blocked */ }
+    }
+  };
+
   // Persist last prayer & scroll to top when prayer changes
   useEffect(() => {
     localStorage.setItem('lastPrayerIndex', String(currentPrayerIndex));
     if (verseRef.current) verseRef.current.scrollTop = 0;
+    setGuidedReaderOpen(false);
   }, [currentPrayerIndex]);
 
   // Keyboard: arrow keys navigate, Escape closes menu
@@ -331,10 +427,11 @@ const App: FC = () => {
 
   const isLentOrHolyWeek = liturgical.season === 'Lent' || liturgical.season === 'Holy Week';
   const isEaster = liturgical.season === 'Easter' || liturgical.season === 'Ascension';
-  const isAngelusHour = (currentHour === 6 || currentHour === 12 || currentHour === 18) && currentMinute < 15;
+  const isAngelusHour = angelusHours.includes(currentHour) && currentMinute < 15;
   const showAngelusBanner = isAngelusHour && !dismissedAngelusHours.has(currentHour);
   const angelusPrayerName = isEaster ? 'Regina Caeli' : 'Angelus';
   const dismissAngelus = () => setDismissedAngelusHours((prev) => new Set(prev).add(currentHour));
+  const isLitany = prayers[currentPrayerIndex].title.toLowerCase().includes('litany');
 
   return (
     <div className="parent">
@@ -347,7 +444,17 @@ const App: FC = () => {
         >
           <span style={{ color: liturgical.color }}>✦</span>
           {showLatin ? liturgical.latinSeason : liturgical.season}
+          {streak > 1 && (
+            <span className="streak-badge" title={`${streak} days in a row — keep it up!`}>🔥 {streak}</span>
+          )}
         </div>
+
+        {feastOfDay && (
+          <div className="feast-banner">
+            <span className="feast-banner-icon">✛</span>
+            {showLatin ? feastOfDay.la : feastOfDay.en}
+          </div>
+        )}
 
         <div className="navbar">
           {mode === 'prayers' && (
@@ -357,15 +464,36 @@ const App: FC = () => {
               <div className="line"></div>
             </div>
           )}
-          <h4>{{ prayers: 'Prayers', rosary: 'The Rosary', stations: 'Stations', chaplet: 'Divine Mercy', sorrows: 'Seven Sorrows' }[mode]}</h4>
+          <h4>{{ prayers: 'Prayers', rosary: 'The Rosary', stations: 'Stations', chaplet: 'Divine Mercy', sorrows: 'Seven Sorrows', intentions: 'Intentions' }[mode]}</h4>
           <div className="font-controls">
-            <button className="dark-btn" onClick={() => setDarkMode((d) => !d)} title="Toggle dark mode">{darkMode ? '☀' : '☽'}</button>
+            <button className="nav-icon-btn" onClick={shrinkFont} disabled={fontScale <= FONT_SCALE_MIN} title="Smaller text">A−</button>
+            <button className="nav-icon-btn" onClick={growFont} disabled={fontScale >= FONT_SCALE_MAX} title="Larger text">A+</button>
+            <button className="nav-icon-btn" onClick={() => setMode('intentions')} title="Prayer intentions">🙏</button>
+            <button className="nav-icon-btn" onClick={() => setShowAngelusSettings((s) => !s)} title="Angelus reminder times">🔔</button>
+            <button className="nav-icon-btn" onClick={() => setDarkMode((d) => !d)} title="Toggle dark mode">{darkMode ? '☀' : '☽'}</button>
           </div>
         </div>
+        {showAngelusSettings && (
+          <div className="angelus-settings">
+            <p className="angelus-settings-label">Remind me to pray the Angelus at</p>
+            <div className="angelus-settings-row">
+              {angelusHours.map((hour, slot) => (
+                <select
+                  key={slot}
+                  className="angelus-hour-select"
+                  value={hour}
+                  onChange={(e) => setAngelusHour(slot, parseInt(e.target.value, 10))}
+                >
+                  {HOUR_OPTIONS.map((h) => <option key={h} value={h}>{formatHour(h)}</option>)}
+                </select>
+              ))}
+            </div>
+          </div>
+        )}
         {showAngelusBanner && (
           <div className="angelus-banner">
             <span>Time for the {angelusPrayerName}</span>
-            <button className="angelus-dismiss" onClick={dismissAngelus}>✕</button>
+            <button className="angelus-dismiss" onClick={dismissAngelus} title="Dismiss">✕</button>
           </div>
         )}
         <div className="mode-toggle">
@@ -378,55 +506,76 @@ const App: FC = () => {
 
         {mode === 'prayers' && (
           <>
-            {isMenuOpen && (
-              <div className="prayer-menu">
-                <input
-                  type="text"
-                  placeholder="Search prayers..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="search-input"
-                />
-                <ul>
-                  {filteredPrayers.map((prayer, index) => (
-                    <li
-                      key={index}
-                      onClick={() => {
-                        setCurrentPrayerIndex(prayers.indexOf(prayer));
-                        setIsMenuOpen(false);
-                      }}
-                    >
-                      {prayer.title}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            <div ref={verseRef} className="verse">
-              <Verse
+            {guidedReaderOpen ? (
+              <GuidedReader
                 title={prayers[currentPrayerIndex].title}
                 latinTitle={prayers[currentPrayerIndex].latinTitle}
                 body={prayers[currentPrayerIndex].body}
                 latinBody={prayers[currentPrayerIndex].latinBody}
                 showLatin={showLatin}
+                onToggleLatin={() => setShowLatin((prev) => !prev)}
+                onBack={() => setGuidedReaderOpen(false)}
               />
-            </div>
+            ) : (
+              <>
+                {isMenuOpen && (
+                  <div className="prayer-menu">
+                    <input
+                      type="text"
+                      placeholder="Search prayers..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="search-input"
+                    />
+                    <ul>
+                      {filteredPrayers.map((prayer, index) => (
+                        <li
+                          key={index}
+                          onClick={() => {
+                            setCurrentPrayerIndex(prayers.indexOf(prayer));
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          {prayer.title}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
-            <p className="prayer-counter">
-              {currentPrayerIndex + 1} / {prayers.length}
-            </p>
+                <div ref={verseRef} className="verse">
+                  <Verse
+                    title={prayers[currentPrayerIndex].title}
+                    latinTitle={prayers[currentPrayerIndex].latinTitle}
+                    body={prayers[currentPrayerIndex].body}
+                    latinBody={prayers[currentPrayerIndex].latinBody}
+                    showLatin={showLatin}
+                  />
+                </div>
 
-            <div className="buttons">
-              <button onClick={handlePrev}>&#8592; Previous</button>
-              <button onClick={handleNext}>Next &#8594;</button>
-              <button onClick={handleRandom} title="Jump to a random prayer">Random ⤮</button>
-              {prayers[currentPrayerIndex].latinBody && (
-                <button onClick={() => setShowLatin(!showLatin)}>
-                  {showLatin ? 'Show English' : 'Show Latin'}
-                </button>
-              )}
-            </div>
+                <p className="prayer-counter">
+                  {currentPrayerIndex + 1} / {prayers.length}
+                </p>
+
+                {isLitany && (
+                  <button className="guided-trigger-btn" onClick={() => setGuidedReaderOpen(true)}>
+                    Pray Step-by-Step ▸
+                  </button>
+                )}
+
+                <div className="buttons">
+                  <button onClick={handlePrev}>&#8592; Previous</button>
+                  <button onClick={handleNext}>Next &#8594;</button>
+                  <button onClick={handleRandom} title="Jump to a random prayer">Random ⤮</button>
+                  <button onClick={sharePrayer} title="Share this prayer">{shareStatus === 'copied' ? 'Copied ✓' : 'Share ⤴'}</button>
+                  {prayers[currentPrayerIndex].latinBody && (
+                    <button onClick={() => setShowLatin(!showLatin)}>
+                      {showLatin ? 'Show English' : 'Show Latin'}
+                    </button>
+                  )}
+                </div>
+              </>
+            )}
           </>
         )}
 
@@ -458,6 +607,8 @@ const App: FC = () => {
             onBack={() => setMode('prayers')}
           />
         )}
+
+        {mode === 'intentions' && <Intentions onBack={() => setMode('prayers')} />}
       </div>
     </div>
   );

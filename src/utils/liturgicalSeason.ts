@@ -8,7 +8,7 @@ export interface LiturgicalInfo {
 }
 
 /** Easter Sunday date for a given year (Anonymous Gregorian algorithm). */
-function easterDate(year: number): Date {
+export function easterDate(year: number): Date {
   const a = year % 19;
   const b = Math.floor(year / 100);
   const c = year % 100;
@@ -26,7 +26,7 @@ function easterDate(year: number): Date {
   return new Date(year, month - 1, day);
 }
 
-function addDays(date: Date, days: number): Date {
+export function addDays(date: Date, days: number): Date {
   const d = new Date(date);
   d.setDate(d.getDate() + days);
   return d;
