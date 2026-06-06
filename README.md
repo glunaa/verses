@@ -44,8 +44,6 @@ The Divine Mercy Chaplet (Coronilla Misericordiae Divinae)
 
 The Chaplet of the Seven Sorrows of Mary (Septem Dolorum BMV)
 
-Litanies (Loreto, the Sacred Heart, and more) can also be prayed step-by-step with "Pray Step-by-Step ▸" — a guided tap-through reader that keeps English and Latin in sync line by line
-
 ## 🙏 Prayers Included
 
 Sign of the Cross (Signum Crucis)
