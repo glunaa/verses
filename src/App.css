@@ -90,6 +90,10 @@ body {
   background-color: #403e3e;
 }
 
+.menu-star {
+  color: #c9a84c;
+}
+
 .container {
   position: relative;      /* anchor the prayer-menu dropdown */
   text-align: center;
@@ -151,6 +155,13 @@ button:hover {
 
 button:focus {
   outline: none;
+}
+
+button:focus-visible,
+.hamburger:focus-visible,
+.prayer-menu li:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
 }
 
 /* ── Liturgical season banner ────────────────────────────────────── */
@@ -477,6 +488,14 @@ button:focus {
 
 .guided-trigger-btn:hover {
   background: rgba(255, 255, 255, 0.16);
+}
+
+.favorite-btn[aria-pressed="true"] {
+  background: rgba(201, 168, 76, 0.35);
+}
+
+.favorite-btn[aria-pressed="true"]:hover {
+  background: rgba(201, 168, 76, 0.5);
 }
 
 .guided-reader-body {

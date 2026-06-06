@@ -48,6 +48,15 @@ function dateKey(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
+function loadFavorites(): Set<string> {
+  try {
+    const parsed = JSON.parse(localStorage.getItem('favoritePrayers') ?? '[]');
+    return new Set(Array.isArray(parsed) ? parsed.filter((t) => typeof t === 'string') : []);
+  } catch {
+    return new Set();
+  }
+}
+
 /** Bumps (or resets) the consecutive-day prayer streak based on the last visit date. */
 function bumpStreak(): number {
   try {
@@ -304,9 +313,11 @@ const App: FC = () => {
   const [angelusHours, setAngelusHours] = useState<[number, number, number]>(loadAngelusHours);
   const [showAngelusSettings, setShowAngelusSettings] = useState(false);
   const [streak] = useState(bumpStreak);
+  const [favorites, setFavorites] = useState<Set<string>>(loadFavorites);
   const [guidedReaderOpen, setGuidedReaderOpen] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
   const verseRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark-mode', darkMode);
@@ -321,6 +332,15 @@ const App: FC = () => {
   useEffect(() => {
     localStorage.setItem('angelusHours', JSON.stringify(angelusHours));
   }, [angelusHours]);
+
+  useEffect(() => {
+    localStorage.setItem('favoritePrayers', JSON.stringify([...favorites]));
+  }, [favorites]);
+
+  // Move keyboard focus into the search box when the prayer menu opens
+  useEffect(() => {
+    if (isMenuOpen) searchInputRef.current?.focus();
+  }, [isMenuOpen]);
 
   useEffect(() => {
     const tick = () => {
@@ -349,6 +369,20 @@ const App: FC = () => {
   }, [prayers.length]);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  const selectPrayer = (prayer: verseProps) => {
+    setCurrentPrayerIndex(prayers.indexOf(prayer));
+    setIsMenuOpen(false);
+  };
+
+  const toggleFavorite = (title: string) => {
+    setFavorites((prev) => {
+      const next = new Set(prev);
+      if (next.has(title)) next.delete(title);
+      else next.add(title);
+      return next;
+    });
+  };
 
   const shrinkFont = () => setFontScale((s) => Math.max(FONT_SCALE_MIN, Math.round((s - FONT_SCALE_STEP) * 100) / 100));
   const growFont = () => setFontScale((s) => Math.min(FONT_SCALE_MAX, Math.round((s + FONT_SCALE_STEP) * 100) / 100));
@@ -423,6 +457,7 @@ const App: FC = () => {
   const angelusPrayerName = isEaster ? 'Regina Caeli' : 'Angelus';
   const dismissAngelus = () => setDismissedAngelusHours((prev) => new Set(prev).add(currentHour));
   const isLitany = prayers[currentPrayerIndex].title.toLowerCase().includes('litany');
+  const isFavorite = favorites.has(prayers[currentPrayerIndex].title);
 
   return (
     <div className="parent">
@@ -433,23 +468,35 @@ const App: FC = () => {
           className="season-banner"
           style={{ borderColor: liturgical.color }}
         >
-          <span style={{ color: liturgical.color }}>✦</span>
+          <span aria-hidden="true" style={{ color: liturgical.color }}>✦</span>
           {showLatin ? liturgical.latinSeason : liturgical.season}
           {streak > 1 && (
-            <span className="streak-badge" title={`${streak} days in a row — keep it up!`}>🔥 {streak}</span>
+            <span className="streak-badge" aria-label={`${streak} day prayer streak — keep it up`}>
+              <span aria-hidden="true">🔥</span> {streak}
+            </span>
           )}
         </div>
 
         {feastOfDay && (
           <div className="feast-banner">
-            <span className="feast-banner-icon">✛</span>
+            <span className="feast-banner-icon" aria-hidden="true">✛</span>
             {showLatin ? feastOfDay.la : feastOfDay.en}
           </div>
         )}
 
         <div className="navbar">
           {mode === 'prayers' && (
-            <div className="hamburger" onClick={toggleMenu}>
+            <div
+              className="hamburger"
+              role="button"
+              tabIndex={0}
+              aria-label="Open prayer menu"
+              aria-expanded={isMenuOpen}
+              onClick={toggleMenu}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMenu(); }
+              }}
+            >
               <div className="line"></div>
               <div className="line"></div>
               <div className="line"></div>
@@ -457,11 +504,11 @@ const App: FC = () => {
           )}
           <h4>{{ prayers: 'Prayers', rosary: 'The Rosary', stations: 'Stations', chaplet: 'Divine Mercy', sorrows: 'Seven Sorrows', intentions: 'Intentions' }[mode]}</h4>
           <div className="font-controls">
-            <button className="nav-icon-btn" onClick={shrinkFont} disabled={fontScale <= FONT_SCALE_MIN} title="Smaller text">A−</button>
-            <button className="nav-icon-btn" onClick={growFont} disabled={fontScale >= FONT_SCALE_MAX} title="Larger text">A+</button>
-            <button className="nav-icon-btn" onClick={() => setMode('intentions')} title="Prayer intentions">🙏</button>
-            <button className="nav-icon-btn" onClick={() => setShowAngelusSettings((s) => !s)} title="Angelus reminder times">🔔</button>
-            <button className="nav-icon-btn" onClick={() => setDarkMode((d) => !d)} title="Toggle dark mode">{darkMode ? '☀' : '☽'}</button>
+            <button className="nav-icon-btn" onClick={shrinkFont} disabled={fontScale <= FONT_SCALE_MIN} title="Smaller text" aria-label="Decrease text size">A−</button>
+            <button className="nav-icon-btn" onClick={growFont} disabled={fontScale >= FONT_SCALE_MAX} title="Larger text" aria-label="Increase text size">A+</button>
+            <button className="nav-icon-btn" onClick={() => setMode('intentions')} title="Prayer intentions" aria-label="Prayer intentions">🙏</button>
+            <button className="nav-icon-btn" onClick={() => setShowAngelusSettings((s) => !s)} title="Angelus reminder times" aria-label="Angelus reminder times" aria-expanded={showAngelusSettings}>🔔</button>
+            <button className="nav-icon-btn" onClick={() => setDarkMode((d) => !d)} title="Toggle dark mode" aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>{darkMode ? '☀' : '☽'}</button>
           </div>
         </div>
         {showAngelusSettings && (
@@ -484,7 +531,7 @@ const App: FC = () => {
         {showAngelusBanner && (
           <div className="angelus-banner">
             <span>Time for the {angelusPrayerName}</span>
-            <button className="angelus-dismiss" onClick={dismissAngelus} title="Dismiss">✕</button>
+            <button className="angelus-dismiss" onClick={dismissAngelus} title="Dismiss" aria-label="Dismiss reminder">✕</button>
           </div>
         )}
         <div className="mode-toggle">
@@ -512,8 +559,10 @@ const App: FC = () => {
                 {isMenuOpen && (
                   <div className="prayer-menu">
                     <input
+                      ref={searchInputRef}
                       type="text"
                       placeholder="Search prayers..."
+                      aria-label="Search prayers"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                       className="search-input"
@@ -522,11 +571,14 @@ const App: FC = () => {
                       {filteredPrayers.map((prayer, index) => (
                         <li
                           key={index}
-                          onClick={() => {
-                            setCurrentPrayerIndex(prayers.indexOf(prayer));
-                            setIsMenuOpen(false);
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => selectPrayer(prayer)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectPrayer(prayer); }
                           }}
                         >
+                          {favorites.has(prayer.title) && <span className="menu-star" aria-hidden="true">★ </span>}
                           {prayer.title}
                         </li>
                       ))}
@@ -557,6 +609,15 @@ const App: FC = () => {
                 <div className="buttons">
                   <button onClick={handlePrev}>&#8592; Previous</button>
                   <button onClick={handleNext}>Next &#8594;</button>
+                  <button
+                    className="favorite-btn"
+                    onClick={() => toggleFavorite(prayers[currentPrayerIndex].title)}
+                    title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                    aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                    aria-pressed={isFavorite}
+                  >
+                    {isFavorite ? '★ Favorited' : '☆ Favorite'}
+                  </button>
                   <button onClick={sharePrayer} title="Share this prayer">{shareStatus === 'copied' ? 'Copied ✓' : 'Share ⤴'}</button>
                   {prayers[currentPrayerIndex].latinBody && (
                     <button onClick={() => setShowLatin(!showLatin)}>
