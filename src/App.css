@@ -926,3 +926,44 @@ html.dark-mode .container {
     height: 10px;
   }
 }
+
+/* ── Upgrade: candlelight (dark ambience, tuned subtle) ──
+   Two warm glows breathing near the base of the screen, painted by
+   body::before behind all content. No markup changes; the sacred-heart
+   background stays fully visible. Delete this block to revert. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(44% 32% at 50% 86%, rgba(255, 176, 84, 0.10), transparent 70%),
+    radial-gradient(26% 18% at 50% 92%, rgba(255, 216, 150, 0.07), transparent 70%);
+  animation:
+    candleBreathe 6.5s ease-in-out infinite,
+    candleFlicker 2.3s ease-in-out infinite;
+}
+
+@keyframes candleBreathe {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.02); }
+}
+@keyframes candleFlicker {
+  0%, 100% { filter: brightness(1); }
+  23%      { filter: brightness(1.05); }
+  41%      { filter: brightness(0.98); }
+  67%      { filter: brightness(1.03); }
+  84%      { filter: brightness(0.99); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; opacity: 0.85; }
+}
+
+/* ── Upgrade: subtle halo on the existing season banner ──
+   The banner and its liturgical color already exist in the app;
+   this only lets it glow softly. Delete this block to revert. */
+.season-banner {
+  box-shadow: 0 0 18px color-mix(in srgb, currentColor 0%, var(--liturgical, transparent) 22%);
+  transition: box-shadow 0.6s ease;
+}

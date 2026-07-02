@@ -13,6 +13,10 @@ import './App.css';
 const liturgical = getLiturgicalInfo();
 const feastOfDay = getFeastOfDay();
 
+// Expose the liturgical color to CSS so the whole app quietly follows the
+// Church calendar — vignette, banner glow, and accents shift with the season.
+document.documentElement.style.setProperty('--liturgical', liturgical.color);
+
 type AppMode = 'prayers' | 'rosary' | 'stations' | 'chaplet' | 'intentions';
 
 const FONT_SCALE_MIN = 0.85;

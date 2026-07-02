@@ -1,4 +1,8 @@
-const CACHE_NAME = 'verses-cache-v1';
+// ⚠️ Bump this version string on EVERY deploy — the activate handler below
+// deletes old caches, so changing it is what pushes updates to users.
+// (Long term: switch to vite-plugin-pwa to automate this.)
+const CACHE_VERSION = 'v2';
+const CACHE_NAME = `verses-cache-${CACHE_VERSION}`;
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -30,6 +34,23 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
+  // Network-first for page navigations: users get the newest index.html
+  // (and therefore the newest JS bundle) whenever they're online,
+  // while still falling back to cache offline.
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((c) => c || caches.match('/index.html')))
+    );
+    return;
+  }
+
+  // Stale-while-revalidate for everything else (assets, images, fonts).
   event.respondWith(
     caches.match(event.request).then((cached) => {
       const network = fetch(event.request)
