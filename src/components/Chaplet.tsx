@@ -1,5 +1,7 @@
 import { FC, useState, useEffect, useCallback, useRef } from 'react';
 import SevenSorrows from './SevenSorrows';
+import StMichaelChaplet from './StMichaelChaplet';
+import PreciousBloodChaplet from './PreciousBloodChaplet';
 
 interface ChapletProps {
   showLatin: boolean;
@@ -158,7 +160,7 @@ const BeadTracker: FC<{ step: ChapletStep }> = ({ step }) => {
 
 // ─── Main component ───────────────────────────────────────────────────────────
 const Chaplet: FC<ChapletProps> = ({ showLatin, onToggleLatin }) => {
-  const [chapletType, setChapletType] = useState<'divine-mercy' | 'seven-sorrows' | null>(null);
+  const [chapletType, setChapletType] = useState<'divine-mercy' | 'seven-sorrows' | 'st-michael' | 'precious-blood' | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
   const bodyRef = useRef<HTMLDivElement>(null);
 
@@ -170,7 +172,8 @@ const Chaplet: FC<ChapletProps> = ({ showLatin, onToggleLatin }) => {
   }, [stepIndex]);
 
   useEffect(() => {
-    if (!chapletType || chapletType === 'seven-sorrows') return;
+    // Only Divine Mercy is stepped here; the other chaplets handle their own keys.
+    if (chapletType !== 'divine-mercy') return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') goNext();
       else if (e.key === 'ArrowLeft') goPrev();
@@ -182,6 +185,26 @@ const Chaplet: FC<ChapletProps> = ({ showLatin, onToggleLatin }) => {
   if (chapletType === 'seven-sorrows') {
     return (
       <SevenSorrows
+        showLatin={showLatin}
+        onToggleLatin={onToggleLatin}
+        onBack={() => setChapletType(null)}
+      />
+    );
+  }
+
+  if (chapletType === 'st-michael') {
+    return (
+      <StMichaelChaplet
+        showLatin={showLatin}
+        onToggleLatin={onToggleLatin}
+        onBack={() => setChapletType(null)}
+      />
+    );
+  }
+
+  if (chapletType === 'precious-blood') {
+    return (
+      <PreciousBloodChaplet
         showLatin={showLatin}
         onToggleLatin={onToggleLatin}
         onBack={() => setChapletType(null)}
@@ -205,6 +228,14 @@ const Chaplet: FC<ChapletProps> = ({ showLatin, onToggleLatin }) => {
           <button className="mystery-set-btn" onClick={() => setChapletType('seven-sorrows')}>
             <span className="mystery-set-name">Seven Sorrows</span>
             <span className="mystery-set-days">Chaplet of Our Lady</span>
+          </button>
+          <button className="mystery-set-btn" onClick={() => setChapletType('st-michael')}>
+            <span className="mystery-set-name">St. Michael</span>
+            <span className="mystery-set-days">The Angelic Crown</span>
+          </button>
+          <button className="mystery-set-btn" onClick={() => setChapletType('precious-blood')}>
+            <span className="mystery-set-name">Precious Blood</span>
+            <span className="mystery-set-days">Seven Blood-Sheddings</span>
           </button>
         </div>
       </div>

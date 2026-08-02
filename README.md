@@ -6,7 +6,7 @@ Verses is a beautiful React app designed to guide your prayer life. It features 
 
 🗣️ Bilingual Prayers — Switch between English and Latin effortlessly
 
-📿 Guided Devotions — Step-by-step guides for the Rosary, the Stations of the Cross, the Divine Mercy Chaplet, and the Chaplet of the Seven Sorrows of Mary, complete with bead/step trackers
+📿 Guided Devotions — Step-by-step guides for the Rosary, the Stations of the Cross, and four chaplets (Divine Mercy, Seven Sorrows, St. Michael, and the Precious Blood), complete with bead/step trackers
 
 🔍 Search & Browse — Quickly find any prayer from the menu
 
@@ -43,6 +43,10 @@ The Stations of the Cross (Via Crucis) — all fourteen stations
 The Divine Mercy Chaplet (Coronilla Misericordiae Divinae)
 
 The Chaplet of the Seven Sorrows of Mary (Septem Dolorum BMV)
+
+The Chaplet of St. Michael (Corona Angelica) — nine salutations, one for each choir of angels
+
+The Chaplet of the Most Precious Blood — the seven blood-sheddings of Our Lord, with 33 Our Fathers
 
 ## 🙏 Prayers Included
 
@@ -128,7 +132,7 @@ CSS
 
 Browse prayers and toggle between English 🇺🇸 and Latin 🇻🇦, or search for a prayer by name
 
-Switch into Rosary, Stations, or Chaplet mode for a guided, step-by-step devotion with progress and bead tracking — choosing between the Divine Mercy Chaplet and the Chaplet of the Seven Sorrows of Mary — or tap through a litany line by line with "Pray Step-by-Step ▸"
+Switch into Rosary, Stations, or Chaplet mode for a guided, step-by-step devotion with progress and bead tracking — choosing among the Divine Mercy, Seven Sorrows, St. Michael, and Precious Blood chaplets — or tap through a litany line by line with "Pray Step-by-Step ▸"
 
 Use the navbar icons to shrink/grow text (A− / A+), open your Prayer Intentions 🙏, set your own Angelus reminder times 🔔, or toggle dark mode 🌗
 
